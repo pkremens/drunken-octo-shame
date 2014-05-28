@@ -30,5 +30,9 @@ public class App {
 
         //Get the JDK architecture
         System.out.println("JVM Bit size: " + System.getProperty("sun.arch.data.model"));
+
+	System.out.println("user.home propertry default value: " + System.getProperty("user.home"));
+	System.setProperty("user.home", "/home/pkremens/devel");
+	System.out.println("user.home propertry after change: " + System.getProperty("user.home"));
     }
 }
