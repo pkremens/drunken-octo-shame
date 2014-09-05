@@ -20,27 +20,39 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 
-package oeg.jboss.qe.management.client;
+package org.jboss.qe.management.cli;
 
-import org.jboss.as.controller.client.ModelControllerClient;
-import org.jboss.dmr.ModelNode;
+import org.jboss.as.cli.scriptsupport.CLI;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
-
-import java.io.IOException;
-import java.net.InetAddress;
 
 /**
  * @author <a href="mailto:pkremens@redhat.com">Petr Kremensky</a>
  */
-public class ReloadTestCase {
-    @Test
-    public void simpleUsageTest() throws IOException {
-        ModelControllerClient client = ModelControllerClient.Factory.create(InetAddress.getByName("localhost"), 9990);
-        ModelNode op = new ModelNode();
-        op.get("operation").set("reload");
-        System.out.println(op.asString());
-        ModelNode result = client.execute(op);
-        System.out.println(result.asString());
+public class CliReloadTestCase {
+    private CLI cli;
 
+    @Before
+    public void createCli() {
+        cli = CLI.newInstance();
+        cli.connect();
+    }
+
+    @After
+    public void disconnect() {
+        cli.disconnect();
+    }
+
+    @Test
+    public void reloadTest() {
+        System.out.println(executeCommand("reload"));
+
+    }
+
+    private String executeCommand(String command) {
+        CLI.Result result = cli.cmd(command);
+        return result.getResponse().get("outcome").asString();
     }
 }
