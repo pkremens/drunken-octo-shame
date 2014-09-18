@@ -119,8 +119,11 @@ public class MainFrameJlog514 extends javax.swing.JFrame implements Observer {
             this.thr.setName("GUI-Listener");
             this.thr.start();
             System.out.println("Listening");
+            mainTextArea.append("Listening");
+
         } else {
             System.out.println("Already running");
+            mainTextArea.append("Already running");
         }
 
     }//GEN-LAST:event_mainStartButtonMouseClicked
