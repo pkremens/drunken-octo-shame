@@ -19,7 +19,7 @@ batch
 /core-service=management/access=audit/syslog-handler=mysyslog/protocol=udp:add(host=localhost,port=9998)
 run-batch
  - Add a reference to the syslog handler.
-/core-service=management/access=audit/logger=audit-log/handler=mysyslog:add                            \
+/core-service=management/access=audit/logger=audit-log/handler=mysyslog:add
  - dummy operation
 /core-service=management/management-interface=http-interface:write-attribute(name=console-enabled, value=true)
 
@@ -39,3 +39,5 @@ run-batch
 
 
 Use this to create a new lightweight syslog server for EAP testing purposes.
+
+See EAP commit [WFLY-3162] for simpleSyslogServer example
