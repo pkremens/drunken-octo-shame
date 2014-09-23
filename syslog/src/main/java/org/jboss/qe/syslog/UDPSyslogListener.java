@@ -20,16 +20,17 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 
+package org.jboss.qe.syslog;
+
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
-import java.net.SocketException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
  * @author <a href="mailto:pkremens@redhat.com">Petr Kremensky</a>
  */
-public class DummySyslogListener {
+public class UDPSyslogListener {
 
     public static void main(String[] args) {
         UdpListener worker = new UdpListener(9998);
@@ -37,23 +38,19 @@ public class DummySyslogListener {
     }
 
     private static class UdpListener extends Thread {
-        private Logger log = Logger.getLogger(UdpListener.class.getSimpleName());
-        private int localport;
+        private final Logger log = Logger.getLogger(UdpListener.class.getSimpleName());
+        private final int localport;
         private DatagramSocket socket;
-        private StringBuilder sb = new StringBuilder();
+        private final StringBuilder sb = new StringBuilder();
 
         public UdpListener(int localport) {
             this.localport = localport;
         }
 
-        public UdpListener() throws SocketException {
-            this(514);
-        }
-
         @Override
         public void run() {
             try {
-                log.info(String.format("Creating a dummy syslog server listening on port %d", localport));
+                log.info(String.format("Starting a simple UDP syslog server listening on port %d", localport));
                 this.socket = new DatagramSocket(localport);
                 while (true) {
                     sb.setLength(0);
