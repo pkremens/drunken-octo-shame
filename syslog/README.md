@@ -18,6 +18,9 @@ run-batch
  - dummy operation
 /core-service=management/management-interface=http-interface:write-attribute(name=console-enabled, value=true)
 
+syslog stats:
+ls -l /core-service=management/access=audit/syslog-handler=mysyslog
+
 change UPD to TCP
 batch
 /core-service=management/access=audit/syslog-handler=mysyslog/protocol=udp:remove()
