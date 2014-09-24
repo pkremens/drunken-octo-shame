@@ -1,6 +1,6 @@
-UDP based syslog listening on port 9998
-
-did some little changes so it listen to port 9998 by default (can be used without sudo) and added some console printing.
+UDPSyslogListener - UDP based syslog listening on port 9998 -> prints to console
+TCPSyslogListener - TCP based syslog listening on port 9998 -> prints to console
+PortBlockingHelper - TCP port blocker - 9998
 
 EAP configuration - STANDALONE:
  - start the standalone server
