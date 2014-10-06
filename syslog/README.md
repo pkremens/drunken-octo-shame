@@ -18,6 +18,24 @@ run-batch
  - dummy operation
 /core-service=management/management-interface=http-interface:write-attribute(name=console-enabled, value=true)
 
+Recconection timeout is valid only for TCP and TLS protocol
+host=station5.brq.redhat.com, port=514
+service rsyslog start
+service rsyslog stop
+vim /var/log/messages
+
+####################################################################################
+/core-service=management/access=audit/logger=audit-log:write-attribute(name=enabled,value=true)
+batch
+/core-service=management/access=audit/syslog-handler=mysyslog:add(formatter=json-formatter, max-failure-count=2)
+/core-service=management/access=audit/syslog-handler=mysyslog/protocol=tcp:add(host=station5.brq.redhat.com, port=514, reconnect-timeout=30)
+run-batch
+/core-service=management/access=audit/logger=audit-log/handler=mysyslog:add
+
+/core-service=management/management-interface=http-interface:write-attribute(name=console-enabled, value=true)
+
+####################################################################################
+
 syslog stats:
 ls -l /core-service=management/access=audit/syslog-handler=mysyslog
 
