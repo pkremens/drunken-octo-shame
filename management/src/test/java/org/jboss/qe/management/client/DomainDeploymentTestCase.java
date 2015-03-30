@@ -13,6 +13,8 @@ import java.net.UnknownHostException;
 
 /**
  * @author Petr Kremensky pkremens@redhat.com on 3/30/15.
+ *         <p/>
+ *         mvn test -Dtest=DomainDeploymentTestCase -Peap630 -s /home/pkremens/devel/jbossqe-eap-testsuite-eap6/tools/maven/conf/settings.xml
  */
 public class DomainDeploymentTestCase {
     private static final int MNGMT_PORT = 9999;
@@ -41,13 +43,13 @@ public class DomainDeploymentTestCase {
     }
 
     public void deploy() throws IOException {
-        DomainClient client = DomainClient.Factory.create(InetAddress.getByName("localhost"), MNGMT_PORT);
-
+//        DomainClient client = DomainClient.Factory.create(InetAddress.getByName("localhost"), MNGMT_PORT);
         DomainDeploymentManager manager = client.getDeploymentManager();
         DeploymentPlanBuilder builder = manager.newDeploymentPlan();
         DeploymentPlan plan;
         File archive = new File("/home/pkremens/jboss-helloworld.war");
         String serverGroup = "main-server-group";
+        DeploymentPlanResult result;
         try {
             plan = builder.add(archive).deploy(archive.getName()).toServerGroup(serverGroup).build();
         } catch (DuplicateDeploymentNameException ex) {
@@ -55,7 +57,8 @@ public class DomainDeploymentTestCase {
         }
         if (plan != null) {
             try {
-                manager.execute(plan).get(30, java.util.concurrent.TimeUnit.MINUTES);
+                result = manager.execute(plan).get(30, java.util.concurrent.TimeUnit.MINUTES);
+                Assert.assertTrue(result.isValid());
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
