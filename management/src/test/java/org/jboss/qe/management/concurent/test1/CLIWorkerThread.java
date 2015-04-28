@@ -49,9 +49,9 @@ public class CLIWorkerThread implements Runnable {
                 }
             }
             br.close();
-            if (!sb.toString().contains("\"outcome\" => \"success\"")) {
-                System.out.printf(sb.toString());
-            }
+//            if (!sb.toString().contains("\"outcome\" => \"success\"")) {
+            System.out.printf(sb.toString());
+//            }
             System.out.println("Finished: " + identifier + " in " + (System.currentTimeMillis() - startTime) + "ms");
         } catch (IOException e) {
             e.printStackTrace();

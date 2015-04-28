@@ -43,13 +43,12 @@ public class CLIWorkerAsyncThread implements Runnable {
             e.printStackTrace();
         }
         if (reader.isAlive()) {
-            reader.safeClose();
             System.out.println("Destroying " + identifier);
             process.destroy();
+            reader.interrupt();
         }
         if (!verifyOutcome(reader.getOutput())) {
-
-            System.out.printf(reader.getOutput());
+            System.err.println(reader.getOutput());
         }
         System.out.println("Finished: " + identifier + " in " + (System.currentTimeMillis() - startTime) + "ms");
 
@@ -76,7 +75,7 @@ public class CLIWorkerAsyncThread implements Runnable {
 
     private class AsyncReader extends Thread {
         private final StringBuilder sb = new StringBuilder();
-        private final BufferedReader br;
+        private BufferedReader br;
 
         private AsyncReader(InputStream inputStream) {
             this.br = new BufferedReader(new InputStreamReader(inputStream));
@@ -86,20 +85,13 @@ public class CLIWorkerAsyncThread implements Runnable {
         public void run() {
             String line;
             try {
+                while (!br.ready()) {
+                    // br.readLine() could stuck without this
+                }
+                ;
                 while ((line = br.readLine()) != null) {
-//                    System.out.println(line);
                     sb.append(line).append("\n");
                 }
-                br.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-                // this should be ignored
-            }
-
-        }
-
-        public void safeClose() {
-            try {
                 br.close();
             } catch (IOException e) {
                 e.printStackTrace();
