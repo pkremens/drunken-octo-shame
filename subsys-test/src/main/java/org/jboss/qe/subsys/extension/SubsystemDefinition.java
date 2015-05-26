@@ -3,7 +3,6 @@ package org.jboss.qe.subsys.extension;
 import org.jboss.as.controller.AbstractRemoveStepHandler;
 import org.jboss.as.controller.ModelOnlyAddStepHandler;
 import org.jboss.as.controller.SimpleResourceDefinition;
-import org.jboss.as.controller.descriptions.NonResolvingResourceDescriptionResolver;
 import org.jboss.as.controller.registry.ManagementResourceRegistration;
 
 /**
@@ -13,7 +12,8 @@ public class SubsystemDefinition extends SimpleResourceDefinition {
     public static final SubsystemDefinition INSTANCE = new SubsystemDefinition();
 
     private SubsystemDefinition() {
-        super(SubsystemExtension.SUBSYSTEM_PATH,new NonResolvingResourceDescriptionResolver(), new ModelOnlyAddStepHandler(), new AbstractRemoveStepHandler(){});
+        super(SubsystemExtension.SUBSYSTEM_PATH, SubsystemExtension.getResourceDescriptionResolver(null), new ModelOnlyAddStepHandler(), new AbstractRemoveStepHandler() {
+        });
     }
 
     @Override
