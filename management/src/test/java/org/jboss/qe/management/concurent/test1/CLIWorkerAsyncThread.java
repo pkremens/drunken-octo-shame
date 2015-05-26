@@ -1,9 +1,12 @@
 package org.jboss.qe.management.concurent.test1;
 
+import org.jboss.qe.management.concurent.utils.LoggerFactory;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.logging.Logger;
 
 /**
  * @author Petr Kremensky pkremens@redhat.com on 4/28/15.
@@ -12,6 +15,7 @@ public class CLIWorkerAsyncThread implements Runnable {
     private final String command = "/home/pkremens/workspace/jboss-eap-6.4/bin/jboss-cli.sh";
     private int identifier;
     private Long timeout;
+    private static final Logger log = LoggerFactory.getLogger(CLIWorkerAsyncThread.class.getSimpleName());
 
 
     public CLIWorkerAsyncThread(int identifier, Long timeout) {
@@ -43,15 +47,16 @@ public class CLIWorkerAsyncThread implements Runnable {
             e.printStackTrace();
         }
         if (reader.isAlive()) {
-            System.out.println("Destroying " + identifier);
+            log.warning("Destroying " + identifier);
             process.destroy();
             reader.interrupt();
         }
         if (!verifyOutcome(reader.getOutput())) {
-            System.err.println(reader.getOutput());
+            CLIThreadPool.increaseExceptions();
+            log.warning(reader.getOutput());
         }
-        System.out.println("Finished: " + identifier + " in " + (System.currentTimeMillis() - startTime) + "ms");
-
+        log.info("Finished: " + identifier + " by: " + Thread.currentThread().getName() + " in "
+                + (System.currentTimeMillis() - startTime) + "ms");
     }
 
     /*
