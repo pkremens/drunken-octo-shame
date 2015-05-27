@@ -9,7 +9,7 @@ import org.jboss.as.cli.handlers.CommandHandlerWithHelp;
  */
 public class SubsystemCommandHandler extends CommandHandlerWithHelp {
 
-    public static final String NAME = "test-cli-ext-commands";
+    public static final String NAME = "my-test-command";
     public static final String OUTPUT = "hello world!";
 
     public SubsystemCommandHandler() {
