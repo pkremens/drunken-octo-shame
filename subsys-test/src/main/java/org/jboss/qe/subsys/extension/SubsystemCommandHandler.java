@@ -9,8 +9,8 @@ import org.jboss.as.cli.handlers.CommandHandlerWithHelp;
  */
 public class SubsystemCommandHandler extends CommandHandlerWithHelp {
 
-    public static final String NAME = "my-test-command";
-    public static final String OUTPUT = "hello world!";
+    public static final String NAME = "kremilek-hello";
+    public static final String OUTPUT = "hello world from Kremilek!";
 
     public SubsystemCommandHandler() {
         super(NAME, false);
