@@ -1,1 +1,3 @@
 org.jboss.qe.subsys.cli.SubsystemCommandHandlerProvider
+org.jboss.qe.subsys.cli.DecreaseCommandHandlerProvider
+org.jboss.qe.subsys.cli.IncreaseCommandHandlerProvider
