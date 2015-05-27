@@ -1,4 +1,4 @@
-package org.jboss.qe.subsys.extension;
+package org.jboss.qe.subsys.cli;
 
 import org.jboss.as.cli.CommandContext;
 import org.jboss.as.cli.CommandLineException;
