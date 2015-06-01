@@ -33,6 +33,7 @@ public class SubsystemExtension implements Extension {
     private final SubsystemParser parser = new SubsystemParser();
 
     protected static final PathElement SUBSYSTEM_PATH = PathElement.pathElement(SUBSYSTEM, SUBSYSTEM_NAME);
+    static final PathElement JAR_BLACKLIST_PATH = PathElement.pathElement("config", "jar-blacklist");
     private static final String RESOURCE_NAME = SubsystemExtension.class.getPackage().getName() + ".LocalDescriptions";
 
     static StandardResourceDescriptionResolver getResourceDescriptionResolver(final String keyPrefix) {
@@ -55,6 +56,6 @@ public class SubsystemExtension implements Extension {
         //register describe operation, note that this can be also registered in SubsystemDefinition
         registration.registerOperationHandler(GenericSubsystemDescribeHandler.DEFINITION, GenericSubsystemDescribeHandler.INSTANCE);
         //we can register additional submodels here
-        subsystem.registerXMLElementWriter(parser);
+        subsystem.registerXMLElementWriter(SubsystemParser.INSTANCE);
     }
 }

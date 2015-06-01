@@ -3,9 +3,9 @@
          <extension module="org.wildfly.extension.bean-validation"/>
          <extension module="org.wildfly.extension.io"/>
 
-
-+       <subsystem xmlns="urn:pkremens:kremilek:1.0"/>
-        <subsystem xmlns="urn:jboss:domain:datasources:3.0">
++         <subsystem xmlns="urn:pkremens:kremilek:1.0">
++             <jar-blacklist jars="test"/>
++         </subsystem>
          
 mvn clean install ; cp -r /home/pkremens/devel/drunken-octo-shame/subsys-test/target/module/org /home/pkremens/workspace/modules/system/layers/base/
 
@@ -35,3 +35,7 @@ hello world from Kremilek!
         }
     }
 }
+
+        <subsystem xmlns="urn:pkremens:kremilek:1.0">
+        <test string-atr="test1">
+        </subsystem>
