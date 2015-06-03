@@ -9,6 +9,11 @@
          
 mvn clean install ; cp -r /home/pkremens/devel/drunken-octo-shame/subsys-test/target/module/org /home/pkremens/workspace/modules/system/layers/base/
 
+/extension=org.jboss.qe.kremilek:add()
+/subsystem=kremilek:add
+./subsystem=kremilek/config=jar-blacklist:add(jars=["test1","test2"]
+
+
 ./standalone.sh &
 ./jboss-cli.sh -c
 [standalone@localhost:9990 /] kremilek-hello
@@ -36,6 +41,7 @@ hello world from Kremilek!
     }
 }
 
-        <subsystem xmlns="urn:pkremens:kremilek:1.0">
-        <test string-atr="test1">
-        </subsystem>
+Pro readme
+
+pridat name="org.jboss.as.cli"> do 
+        <module name="org.jboss.qe.kremilek" optional="true" services="import"/>

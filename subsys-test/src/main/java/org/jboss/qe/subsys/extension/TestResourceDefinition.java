@@ -13,6 +13,8 @@ import java.util.Collections;
  */
 public class TestResourceDefinition extends PersistentResourceDefinition {
 
+    static final TestResourceDefinition INSTANCE = new TestResourceDefinition();
+
     static final StringListAttributeDefinition JAR_NAMES = new StringListAttributeDefinition.Builder("jars")
             .setAllowNull(false)
             .setAttributeMarshaller(new DefaultAttributeMarshaller() {
@@ -36,7 +38,6 @@ public class TestResourceDefinition extends PersistentResourceDefinition {
             })
             .build();
 
-    static final TestResourceDefinition INSTANCE = new TestResourceDefinition();
 
     private TestResourceDefinition() {
         super(SubsystemExtension.JAR_BLACKLIST_PATH,

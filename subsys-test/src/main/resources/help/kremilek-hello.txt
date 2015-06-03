@@ -1,0 +1,11 @@
+SYNOPSIS
+
+    kremilek-hello
+
+DESCRIPTION
+
+    print hellos from Kremilek
+
+ARGUMENTS
+
+    none
