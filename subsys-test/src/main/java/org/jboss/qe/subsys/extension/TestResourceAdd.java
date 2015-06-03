@@ -10,7 +10,7 @@ import org.jboss.dmr.ModelNode;
 public class TestResourceAdd extends AbstractAddStepHandler {
     @Override
     protected void populateModel(ModelNode operation, ModelNode model) throws OperationFailedException {
-        TestResourceDefinition.JAR_NAMES.validateAndSet(operation, model);
+        TestResourceDefinition.STRING_ATTRIBUTES.validateAndSet(operation, model);
     }
 
 }

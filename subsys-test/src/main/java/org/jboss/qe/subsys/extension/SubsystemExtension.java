@@ -26,6 +26,9 @@ public class SubsystemExtension implements Extension {
      * The name of our subsystem within the model.
      */
     public static final String SUBSYSTEM_NAME = "kremilek";
+    public static final String CHILD_NAME_IN_XML = "config";
+    public static final String CHILD_ELEMENT_NAME = "child";
+    public static final String ATTRIBUTE_NAME = "strings";
 
     /**
      * The parser used for parsing our subsystem
@@ -33,7 +36,7 @@ public class SubsystemExtension implements Extension {
     private final SubsystemParser parser = new SubsystemParser();
 
     protected static final PathElement SUBSYSTEM_PATH = PathElement.pathElement(SUBSYSTEM, SUBSYSTEM_NAME);
-    static final PathElement JAR_BLACKLIST_PATH = PathElement.pathElement("config", "jar-blacklist");
+    static final PathElement ELEMENT_PATH = PathElement.pathElement(CHILD_NAME_IN_XML, CHILD_ELEMENT_NAME);
     private static final String RESOURCE_NAME = SubsystemExtension.class.getPackage().getName() + ".LocalDescriptions";
 
     static StandardResourceDescriptionResolver getResourceDescriptionResolver(final String keyPrefix) {

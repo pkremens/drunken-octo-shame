@@ -1,47 +1,45 @@
-+       <extension module="org.jboss.qe.kremilek"/>
-         <extension module="org.wildfly.extension.batch"/>
-         <extension module="org.wildfly.extension.bean-validation"/>
-         <extension module="org.wildfly.extension.io"/>
+# server configuration snippet
+<extension module="org.jboss.qe.kremilek"/>
+...
+<subsystem xmlns="urn:pkremens:kremilek:1.0">
+   <child strings="test1, test2"/>
+</subsystem>
 
-+         <subsystem xmlns="urn:pkremens:kremilek:1.0">
-+             <jar-blacklist jars="test"/>
-+         </subsystem>
-         
-mvn clean install ; cp -r /home/pkremens/devel/drunken-octo-shame/subsys-test/target/module/org /home/pkremens/workspace/modules/system/layers/base/
+-----------------------------
 
+# build
+mvn install
+
+# add module into EAP
+cp -r target/module/org $JBOSS_HOME/modules/system/layers/base/
+
+# start standalone server and connect to CLI
+$JBOSS_HOME/bin/standalone.sh &
+$JBOSS_HOME/bin/jboss-cli.sh -c
+
+# use CLI to setup extension
 /extension=org.jboss.qe.kremilek:add()
+
+# re-connet client to collect commands from extension
+connect
+
+# add subsystem
 /subsystem=kremilek:add
-./subsystem=kremilek/config=jar-blacklist:add(jars=["test1","test2"]
+/subsystem=kremilek/config=child:add(strings=["test1","test2"]
+/subsystem=kremilek/config=child:read-resource
+/subsystem=kremilek/config=child:read-attribute(name=strings)?
 
+# available commands
+increase
+decrease
+kremilek-hello
+kremilek-hello --help
 
-./standalone.sh &
-./jboss-cli.sh -c
-[standalone@localhost:9990 /] kremilek-hello
-hello world from Kremilek!
+mvn clean install
+cp -r /home/pkremens/devel/drunken-octo-shame/subsys-test/target/module/org /home/pkremens/workspace/modules/system/layers/base/
 
-[standalone@localhost:9990 /] cd subsystem=kremilek
-[standalone@localhost:9990 subsystem=kremilek] :read-resource-description
-{
-    "outcome" => "success",
-    "result" => {
-        "description" => "This is my subsystem",
-        ...
-        }
-    }
-}
-
-[standalone@localhost:9990 subsystem=kremilek] :read-operation-description(name=add)
-{
-    "outcome" => "success",
-    "result" => {
-        "operation-name" => "add",
-        "description" => "Operation Adds kremilek subsystem",
-        ...
-        }
-    }
-}
-
-Pro readme
-
-pridat name="org.jboss.as.cli"> do 
-        <module name="org.jboss.qe.kremilek" optional="true" services="import"/>
+Stary zpusob:
+pridat dependency:
+<module name="org.jboss.qe.kremilek" optional="true" services="import"/>
+do module xml pro org.jboss.as.cli
+        

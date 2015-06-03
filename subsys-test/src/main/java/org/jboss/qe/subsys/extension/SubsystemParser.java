@@ -4,7 +4,6 @@ import org.jboss.as.controller.PathAddress;
 import org.jboss.as.controller.PersistentResourceXMLDescription;
 import org.jboss.as.controller.persistence.SubsystemMarshallingContext;
 import org.jboss.dmr.ModelNode;
-import org.jboss.logging.Logger;
 import org.jboss.staxmapper.XMLElementReader;
 import org.jboss.staxmapper.XMLElementWriter;
 import org.jboss.staxmapper.XMLExtendedStreamReader;
@@ -27,7 +26,7 @@ class SubsystemParser implements XMLStreamConstants, XMLElementReader<List<Model
         xmlDescription = builder(SubsystemDefinition.INSTANCE)
                 .addChild(
                         builder(TestResourceDefinition.INSTANCE)
-                                .addAttribute(TestResourceDefinition.JAR_NAMES)
+                                .addAttribute(TestResourceDefinition.STRING_ATTRIBUTES)
                 )
                 .build();
     }

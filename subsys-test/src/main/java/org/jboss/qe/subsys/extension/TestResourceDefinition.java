@@ -15,7 +15,7 @@ public class TestResourceDefinition extends PersistentResourceDefinition {
 
     static final TestResourceDefinition INSTANCE = new TestResourceDefinition();
 
-    static final StringListAttributeDefinition JAR_NAMES = new StringListAttributeDefinition.Builder("jars")
+    static final StringListAttributeDefinition STRING_ATTRIBUTES = new StringListAttributeDefinition.Builder(SubsystemExtension.ATTRIBUTE_NAME)
             .setAllowNull(false)
             .setAttributeMarshaller(new DefaultAttributeMarshaller() {
                 @Override
@@ -40,15 +40,14 @@ public class TestResourceDefinition extends PersistentResourceDefinition {
 
 
     private TestResourceDefinition() {
-        super(SubsystemExtension.JAR_BLACKLIST_PATH,
-                SubsystemExtension.getResourceDescriptionResolver("jar-blacklist"),
-                //new AbstractAddStepHandler(JAR_NAMES),
+        super(SubsystemExtension.ELEMENT_PATH,
+                SubsystemExtension.getResourceDescriptionResolver(SubsystemExtension.CHILD_ELEMENT_NAME),
                 new TestResourceAdd(),
                 ReloadRequiredRemoveStepHandler.INSTANCE);
     }
 
     @Override
     public Collection<AttributeDefinition> getAttributes() {
-        return Collections.singleton((AttributeDefinition) JAR_NAMES);
+        return Collections.singleton((AttributeDefinition) STRING_ATTRIBUTES);
     }
 }
