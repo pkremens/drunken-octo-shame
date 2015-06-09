@@ -12,8 +12,11 @@ import org.junit.Test;
 public class ControllerClientTestCase extends CLITestBase {
     private static ModelControllerClient client;
 
+    /*
+     * Reproducer from https://issues.jboss.org/browse/WFCORE-736
+     */
     @Test
-    public void testLeak() throws Exception{
+    public void testLeak() throws Exception {
         for (int i = 0; i < 1000000; i++) {
             client = null;
             client = ModelControllerClient.Factory.create("localhost", 9990);
