@@ -13,26 +13,19 @@ import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.SUB
 
 
 /**
- * @author <a href="kabir.khan@jboss.com">Kabir Khan</a>
+ * @author Petr Kremensky pkremens@redhat.com
  */
 public class SubsystemExtension implements Extension {
 
-    /**
-     * The name space used for the {@code substystem} element
-     */
     public static final String NAMESPACE = "urn:pkremens:kremilek:1.0";
 
-    /**
-     * The name of our subsystem within the model.
-     */
+    // Properties used for model creation.
     public static final String SUBSYSTEM_NAME = "kremilek";
     public static final String CHILD_NAME_IN_XML = "config";
     public static final String CHILD_ELEMENT_NAME = "child";
     public static final String ATTRIBUTE_NAME = "strings";
 
-    /**
-     * The parser used for parsing our subsystem
-     */
+    // The parser used for parsing our subsystem
     private final SubsystemParser parser = new SubsystemParser();
 
     protected static final PathElement SUBSYSTEM_PATH = PathElement.pathElement(SUBSYSTEM, SUBSYSTEM_NAME);

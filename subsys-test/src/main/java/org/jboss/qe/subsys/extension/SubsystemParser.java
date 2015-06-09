@@ -15,8 +15,9 @@ import java.util.List;
 
 import static org.jboss.as.controller.PersistentResourceXMLDescription.builder;
 
+
 /**
- * @author Petr Kremensky pkremens@redhat.com on 27/05/2015
+ * @author Petr Kremensky pkremens@redhat.com
  */
 class SubsystemParser implements XMLStreamConstants, XMLElementReader<List<ModelNode>>, XMLElementWriter<SubsystemMarshallingContext> {
     protected static final SubsystemParser INSTANCE = new SubsystemParser();

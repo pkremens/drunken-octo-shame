@@ -5,7 +5,7 @@ import org.jboss.as.cli.CommandHandler;
 import org.jboss.as.cli.CommandHandlerProvider;
 
 /**
- * @author Petr Kremensky pkremens@redhat.com on 27/05/2015
+ * @author Petr Kremensky pkremens@redhat.com
  */
 public class IncreaseCommandHandlerProvider implements CommandHandlerProvider {
     @Override
@@ -22,5 +22,4 @@ public class IncreaseCommandHandlerProvider implements CommandHandlerProvider {
     public String[] getNames() {
         return new String[]{IncreaseCommandHandler.NAME};
     }
-
 }

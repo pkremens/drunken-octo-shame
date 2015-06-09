@@ -5,7 +5,7 @@ import org.jboss.as.cli.CommandHandler;
 import org.jboss.as.cli.CommandHandlerProvider;
 
 /**
- * @author Petr Kremensky pkremens@redhat.com on 27/05/2015
+ * @author Petr Kremensky pkremens@redhat.com
  */
 public class DecreaseCommandHandlerProvider implements CommandHandlerProvider {
     @Override

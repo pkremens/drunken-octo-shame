@@ -1,6 +1,8 @@
 package org.jboss.qe.subsys.extension;
 
+import org.jboss.as.controller.AbstractRemoveStepHandler;
 import org.jboss.as.controller.AttributeDefinition;
+import org.jboss.as.controller.ModelOnlyAddStepHandler;
 import org.jboss.as.controller.PersistentResourceDefinition;
 import org.jboss.as.controller.registry.ManagementResourceRegistration;
 
@@ -9,7 +11,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * @author <a href="mailto:tcerar@redhat.com">Tomaz Cerar</a>
+ * @author Petr Kremensky pkremens@redhat.com
  */
 public class SubsystemDefinition extends PersistentResourceDefinition {
     public static final SubsystemDefinition INSTANCE = new SubsystemDefinition();
@@ -17,17 +19,13 @@ public class SubsystemDefinition extends PersistentResourceDefinition {
     private SubsystemDefinition() {
         super(SubsystemExtension.SUBSYSTEM_PATH,
                 SubsystemExtension.getResourceDescriptionResolver(null),
-                //We always need to add an 'add' operation
-                SubsystemAdd.INSTANCE,
-                //Every resource that is added, normally needs a remove operation
-                SubsystemRemove.INSTANCE);
+                new ModelOnlyAddStepHandler(), new AbstractRemoveStepHandler() {
+                });
     }
 
     @Override
     public void registerOperations(ManagementResourceRegistration resourceRegistration) {
         super.registerOperations(resourceRegistration);
-        //you can register aditional operations here
-//        resourceRegistration.registerOperationHandler(GenericSubsystemDescribeHandler.DEFINITION, GenericSubsystemDescribeHandler.INSTANCE, false);
     }
 
     @Override

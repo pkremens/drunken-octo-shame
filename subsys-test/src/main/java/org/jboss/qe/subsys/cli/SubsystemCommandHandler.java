@@ -13,14 +13,12 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 /**
- * @author Petr Kremensky pkremens@redhat.com on 26/05/2015
+ * @author Petr Kremensky pkremens@redhat.com
  */
-public class SubsystemCommandHandler extends CommandHandlerWithHelp {
+class SubsystemCommandHandler extends CommandHandlerWithHelp {
 
     public static final String NAME = "kremilek-hello";
     public static final String OUTPUT = "Hello world from Kremilek!";
-
-    private final String filename = "help/" + NAME + ".txt";
 
     public SubsystemCommandHandler() {
         super(NAME, false);
@@ -33,6 +31,7 @@ public class SubsystemCommandHandler extends CommandHandlerWithHelp {
 
     @Override
     protected void printHelp(CommandContext ctx) throws CommandLineException {
+        final String filename = "help/" + NAME + ".txt";
         ClassLoader cl = WildFlySecurityManager.getClassLoaderPrivileged(SubsystemCommandHandler.class);
         InputStream helpInput = cl.getResourceAsStream(filename);
         if (helpInput != null) {

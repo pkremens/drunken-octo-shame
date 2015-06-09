@@ -5,9 +5,9 @@ import org.jboss.as.cli.CommandLineException;
 import org.jboss.as.cli.handlers.CommandHandlerWithHelp;
 
 /**
- * @author Petr Kremensky pkremens@redhat.com on 27/05/2015
+ * @author Petr Kremensky pkremens@redhat.com
  */
-public class IncreaseCommandHandler extends CommandHandlerWithHelp {
+class IncreaseCommandHandler extends CommandHandlerWithHelp {
     public static final String NAME = "increase";
 
     public IncreaseCommandHandler() {

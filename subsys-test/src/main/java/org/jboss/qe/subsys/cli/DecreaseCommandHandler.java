@@ -5,10 +5,10 @@ import org.jboss.as.cli.CommandLineException;
 import org.jboss.as.cli.handlers.CommandHandlerWithHelp;
 
 /**
- * @author Petr Kremensky pkremens@redhat.com on 27/05/2015
+ * @author Petr Kremensky pkremens@redhat.com
  */
-public class DecreaseCommandHandler extends CommandHandlerWithHelp {
-    public static final String NAME = "decrease";
+class DecreaseCommandHandler extends CommandHandlerWithHelp {
+    public static final String NAME = "echo";
 
     public DecreaseCommandHandler() {
         super(NAME, false);

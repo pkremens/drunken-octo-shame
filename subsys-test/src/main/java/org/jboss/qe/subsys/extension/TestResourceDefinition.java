@@ -9,9 +9,9 @@ import java.util.Collection;
 import java.util.Collections;
 
 /**
- * @author Petr Kremensky pkremens@redhat.com on 01/06/2015
+ * @author Petr Kremensky pkremens@redhat.com
  */
-public class TestResourceDefinition extends PersistentResourceDefinition {
+class TestResourceDefinition extends PersistentResourceDefinition {
 
     static final TestResourceDefinition INSTANCE = new TestResourceDefinition();
 
