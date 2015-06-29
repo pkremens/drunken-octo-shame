@@ -6,9 +6,6 @@ import org.jboss.dmr.ModelNode;
 import org.jboss.qa.CLITestBase;
 import org.junit.Test;
 
-/**
- * https://issues.jboss.org/browse/WFCORE-736
- */
 public class ControllerClientTestCase extends CLITestBase {
     private static ModelControllerClient client;
 
@@ -17,12 +14,20 @@ public class ControllerClientTestCase extends CLITestBase {
      */
     @Test
     public void testLeak() throws Exception {
-        for (int i = 0; i < 1000000; i++) {
+        for (int i = 0; i < 100000; i++) {
             client = null;
-            client = ModelControllerClient.Factory.create("localhost", 9990);
+            // EAP6
+            client = ModelControllerClient.Factory.create("localhost", 9999);
+            // EAP7
+//            client = ModelControllerClient.Factory.create("localhost", 9990);
             ModelNode operation = Operations.createReadAttributeOperation(new ModelNode().setEmptyList(), "server-state");
-            client.execute(operation);
-            client.close();
+            try {
+                client.execute(operation);
+                client.close();
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+
             if (i % 1000 == 0) {
                 System.out.println("Processed: " + i);
             }

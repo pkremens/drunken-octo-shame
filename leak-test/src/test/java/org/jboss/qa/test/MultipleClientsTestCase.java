@@ -21,7 +21,7 @@ public class MultipleClientsTestCase extends CLITestBase {
     @Test
     public void multipleClientsTest() throws Exception {
         // creating more requests using multiple clients is currently blocked by BZ1199319
-        String result = CLITestExecutor.cliTest(4, 10000, CLISingleRequestWorker.class, JBOSS_HOME,
+        String result = CLITestExecutor.cliTest(4, 1000, CLISingleRequestWorker.class, JBOSS_HOME,
                 this.getClass().getSimpleName());
         Assert.assertTrue("Found some exceptions on client side!\n" + result, result.isEmpty());
     }
