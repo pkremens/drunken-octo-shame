@@ -1,5 +1,7 @@
 package org.jboss.qe.jdk8.annotations;
 
+import com.sun.istack.internal.NotNull;
+
 import java.lang.reflect.Method;
 import java.util.Arrays;
 
@@ -9,6 +11,10 @@ import java.util.Arrays;
 @Version(major = 1)
 
 public class Code {
+
+    public void print(@NotNull String toBePrinted) {
+        System.out.println(toBePrinted);
+    }
 
     @Version(major = 2, minor = 3)
     public Code() {
