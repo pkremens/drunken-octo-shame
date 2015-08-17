@@ -44,7 +44,6 @@ public class CLISingleRequestWorker implements Runnable {
     }
 
 
-    @Override
     public void run() {
         String id = String.format("request %d by: %s", identifier, Thread.currentThread().getName());
         final long startTime = System.currentTimeMillis();

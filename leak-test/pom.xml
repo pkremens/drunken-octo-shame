@@ -12,7 +12,8 @@
         <version.junit.junit>4.12</version.junit.junit>
         <version.maven.enforcer.plugin>1.4</version.maven.enforcer.plugin>
         <version.maven.surefire.plugin>2.18.1</version.maven.surefire.plugin>
-        <version.jboss-as.controller>dummy</version.jboss-as.controller>
+        <version.org.wildfly.core>2.0.0.Alpha5</version.org.wildfly.core>
+        <!--<version.jboss-as.controller>dummy</version.jboss-as.controller>-->
     </properties>
 
     <dependencies>
@@ -22,12 +23,18 @@
             <version>${version.junit.junit}</version>
         </dependency>
         <dependency>
-                <groupId>org.jboss.as</groupId>
-                <artifactId>jboss-as-controller-client</artifactId>
-                <version>${version.jboss-as.controller}</version>
-            <scope>system</scope>
-            <systemPath>${jboss.dist}/bin/client/jboss-cli-client.jar</systemPath>
+            <groupId>org.wildfly.core</groupId>
+            <artifactId>wildfly-controller-client</artifactId>
+            <version>${version.org.wildfly.core}</version>
+            <scope>compile</scope>
         </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.jboss.as</groupId>-->
+            <!--<artifactId>jboss-as-controller-client</artifactId>-->
+            <!--<version>${version.jboss-as.controller}</version>-->
+            <!--<scope>system</scope>-->
+            <!--<systemPath>${jboss.dist}/bin/client/jboss-cli-client.jar</systemPath>-->
+        <!--</dependency>-->
     </dependencies>
 
     <build>

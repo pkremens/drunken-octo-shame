@@ -16,10 +16,7 @@ public class ControllerClientTestCase extends CLITestBase {
     public void testLeak() throws Exception {
         for (int i = 0; i < 100000; i++) {
             client = null;
-            // EAP6
-            client = ModelControllerClient.Factory.create("localhost", 9999);
-            // EAP7
-//            client = ModelControllerClient.Factory.create("localhost", 9990);
+            client = ModelControllerClient.Factory.create("localhost", PORT);
             ModelNode operation = Operations.createReadAttributeOperation(new ModelNode().setEmptyList(), "server-state");
             try {
                 client.execute(operation);

@@ -20,13 +20,12 @@ import java.util.logging.Logger;
  */
 public abstract class CLITestBase {
     public static final File JBOSS_HOME = new File(System.getProperty("jboss.dist"));
+    public static final int PORT = JBOSS_HOME.getName().contains("eap-7") ? 9990 : 9999;
+    private static final String STARTED_IN = JBOSS_HOME.getName().contains("eap-7") ? "WFLYSRV0025" : "JBAS015874";
+
     private static final int START_TIMEOUT = 30;
     private static final int STOP_TIMEOUT = 10; // use this once it's required to shutdown the server asynchronously
     private static final Logger log = LoggerFactory.getLogger(CLITestBase.class.getSimpleName());
-    // EAP6
-    private static final String STARTED_IN = "JBAS015874";
-    // EAP7
-//    private static final String STARTED_IN = "WFLYSRV0025";
 
     private Server server;
     private boolean started;
