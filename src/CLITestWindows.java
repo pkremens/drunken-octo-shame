@@ -1,8 +1,4 @@
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -20,14 +16,26 @@ public class CLITestWindows {
     public static void main(String[] args) throws InterruptedException, IOException {
         final File JBOSS_CLI = new File(args[0]);
         assert JBOSS_CLI.exists();
+        
+        /* print system properties
+        Properties props = System.getProperties();
+        Enumeration<Object> keys = props.keys();
+        while (keys.hasMoreElements()) {
+            String key = (String) keys.nextElement();
+            System.out.println(key + " - " + System.getProperty(key));
+        }
+        */
+
+        System.out.println();
+
 
 //        String directConsole = null;
 ////         windows specific
 //        if (isWindows()) {
 //            directConsole = INSTALLER.getName().contains("7.0.0") ? "-Dinstaller.direct.console=true" : "-Djline.WindowsTerminal.directConsole=false";
 //        }
-
-        ProcessBuilder pb = new ProcessBuilder(buildArgs("sh", JBOSS_CLI.getAbsolutePath()));
+        System.setProperty("aesh.terminal", "org.jboss.aesh.terminal.TestTerminal");
+        ProcessBuilder pb = new ProcessBuilder(buildArgs("cmd", "/c", JBOSS_CLI.getAbsolutePath(), "-Daesh.terminal=org.jboss.aesh.terminal.TestTerminal", "-Daesh.ansi=false"));
         pb.redirectErrorStream(true);
 
         // start process
@@ -51,15 +59,24 @@ public class CLITestWindows {
         waitFor("[standalone@embedded /]", "blah");
         sendLine("help");
         waitFor("in some cases, values", "blah2");
+        sendLine("reload");
+        waitFor("[standalone@embedded /]", "blah");
 
-
-        process.destroy();
+        
+        // minimal set of commands to destroy the process completely on Windows
+        process.getOutputStream().close();
+        process.destroyForcibly();
+        process.waitFor();
     }
 
     // null for empty
     private static void sendLine(String line) throws IOException {
-        writer.write(line + "\n");
+        System.out.println("Sending line: " + line);
+        writer.write(line);
+//        writer.newLine();
+        writer.write(System.getProperty("line.separator"));
         writer.flush();
+//        writer.close();
     }
 
     private static void waitFor(String expected, String onFail) throws InterruptedException {
@@ -96,11 +113,18 @@ public class CLITestWindows {
         public void run() {
             try {
                 int c;
+                while (!inputReader.ready()) {
+                    // wait for stream to be ready
+                    Thread.sleep(50L);
+                }
                 while ((c = inputReader.read()) != -1) {
                     output.append((char) c);
                 }
             } catch (IOException e) {
+                System.err.println(e.getMessage());
                 System.err.println("Exception caught while reading process output");
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             } finally {
                 try {
                     if (inputReader != null) {

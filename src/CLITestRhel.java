@@ -1,8 +1,4 @@
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -26,7 +22,12 @@ public class CLITestRhel {
 //        if (isWindows()) {
 //            directConsole = INSTALLER.getName().contains("7.0.0") ? "-Dinstaller.direct.console=true" : "-Djline.WindowsTerminal.directConsole=false";
 //        }
-
+        
+        /*
+                    shellCommand[0] = "bash";
+            shellCommand[1] = "-c";
+            commandLine = "./" + commandName + ".sh";
+         */
         ProcessBuilder pb = new ProcessBuilder(buildArgs("sh", JBOSS_CLI.getAbsolutePath()));
         pb.redirectErrorStream(true);
 
