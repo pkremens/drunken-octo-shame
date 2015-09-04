@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.jboss.qe</groupId>
+    <artifactId>cli-playground</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <properties>
+        <version.checkstyle.plugin>2.15</version.checkstyle.plugin>
+        <version.findbugs.plugin>3.0.1</version.findbugs.plugin>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <!--Uncomment the plugins part to turn it on-->
+                <plugin>
+                    <artifactId>maven-checkstyle-plugin</artifactId>
+                    <version>${version.checkstyle.plugin}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>findbugs-maven-plugin</artifactId>
+                    <version>${version.findbugs.plugin}</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
+        <!--<plugins>-->
+            <!--<plugin>-->
+                <!--<artifactId>maven-checkstyle-plugin</artifactId>-->
+                <!--<executions>-->
+                    <!--<execution>-->
+                        <!--<id>check-style</id>-->
+                        <!--<phase>compile</phase>-->
+                        <!--<goals>-->
+                            <!--<goal>checkstyle</goal>-->
+                        <!--</goals>-->
+                        <!--<configuration>-->
+                            <!--<configLocation>-->
+                                <!--src/main/resources/checkstype.xml-->
+                            <!--</configLocation>-->
+                            <!--<includeTestSourceDirectory>true</includeTestSourceDirectory>-->
+                            <!--<consoleOutput>true</consoleOutput>-->
+                            <!--<failsOnError>true</failsOnError>-->
+                            <!--&lt;!&ndash;<useFile/>&ndash;&gt;-->
+                        <!--</configuration>-->
+                    <!--</execution>-->
+                <!--</executions>-->
+                <!--<configuration>-->
+                    <!--<configLocation>-->
+                        <!--src/main/resources/checkstype.xml-->
+                    <!--</configLocation>-->
+                    <!--<includeTestSourceDirectory>true</includeTestSourceDirectory>-->
+                    <!--<consoleOutput>true</consoleOutput>-->
+                    <!--<failsOnError>true</failsOnError>-->
+                    <!--&lt;!&ndash;<useFile/>&ndash;&gt;-->
+                <!--</configuration>-->
+            <!--</plugin>-->
+            <!--&lt;!&ndash;Asi to nefunguje, ale to neva, az to budu nekdy potrebovat tak si to potunim, tady at je to klidne k nicemu...&ndash;&gt;-->
+            <!--<plugin>-->
+                <!--<groupId>org.codehaus.mojo</groupId>-->
+                <!--<artifactId>findbugs-maven-plugin</artifactId>-->
+                <!--<executions>-->
+                    <!--<execution>-->
+                        <!--<id>finding-bugs</id>-->
+                        <!--<phase>verify</phase>-->
+                        <!--<goals>-->
+                            <!--<goal>findbugs</goal>-->
+                        <!--</goals>-->
+                        <!--<configuration>-->
+                            <!--<threshold>Low</threshold>-->
+                            <!--<xmlOutput>true</xmlOutput>-->
+                        <!--</configuration>-->
+                    <!--</execution>-->
+                <!--</executions>-->
+            <!--</plugin>-->
+        <!--</plugins>-->
+    </build>
+</project>
