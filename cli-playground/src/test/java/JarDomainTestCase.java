@@ -20,6 +20,8 @@ public class JarDomainTestCase extends AbstractEmbedServerTestCase {
     }
 
 
+
+
     @Override
     void standardServerStart() throws Exception {
         String arg = " --jboss-home=" + JBOSS_HOME;
