@@ -1,3 +1,4 @@
+# EAP7-91
 # server configuration snippet
 <extension module="org.jboss.qe.kremilek"/>
 ...
