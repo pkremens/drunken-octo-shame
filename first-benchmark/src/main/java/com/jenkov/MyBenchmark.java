@@ -32,13 +32,49 @@
 package com.jenkov;
 
 import org.openjdk.jmh.annotations.Benchmark;
+import org.openjdk.jmh.annotations.BenchmarkMode;
+import org.openjdk.jmh.annotations.Level;
+import org.openjdk.jmh.annotations.Mode;
+import org.openjdk.jmh.annotations.OutputTimeUnit;
+import org.openjdk.jmh.annotations.Scope;
+import org.openjdk.jmh.annotations.Setup;
+import org.openjdk.jmh.annotations.State;
+import org.openjdk.jmh.annotations.TearDown;
+import org.openjdk.jmh.infra.Blackhole;
 
+import java.util.concurrent.TimeUnit;
+
+
+/**
+ * mvn clean package
+ * java -jar target/benchmarks.jar
+ */
 public class MyBenchmark {
 
-    @Benchmark
-    public void testMethod() {
-        // This is a demo/sample template for building your JMH benchmarks. Edit as needed.
-        // Put your benchmark code here.
+    @State(Scope.Thread)
+    public static class MyState {
+
+        @Setup(Level.Trial)
+        public void doSetup() {
+            sum = 0;
+            System.out.println("Do Setup");
+        }
+
+        @TearDown(Level.Iteration)
+        public void doTearDown() {
+            System.out.println("Do TearDown");
+        }
+
+        public int a = 1;
+        public int b = 2;
+        public int sum;
     }
 
+    @Benchmark
+    @BenchmarkMode(Mode.Throughput)
+    @OutputTimeUnit(TimeUnit.MINUTES)
+    public void testMethod(MyState state, Blackhole blackhole) {
+        state.sum = state.a + state.b;
+        blackhole.consume(state.sum);
+    }
 }
