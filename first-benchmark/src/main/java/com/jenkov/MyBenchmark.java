@@ -46,6 +46,8 @@ import java.util.concurrent.TimeUnit;
 
 
 /**
+ * http://tutorials.jenkov.com/java-performance/jmh.html
+ * <p>
  * mvn clean package
  * java -jar target/benchmarks.jar
  */
