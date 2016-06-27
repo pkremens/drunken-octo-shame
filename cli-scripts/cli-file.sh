@@ -3,11 +3,6 @@
 
 source ./cli-all.sh
 
-export EAP_HOME=~/workspace/wildfly-core-3.0.0.Alpha3-SNAPSHOT/bin
-
-PROPERTIES=${EAP_HOME}/cli.properties
-CLI_SCRIPT=${EAP_HOME}/test.cli
-
 # prepare properties file
 function prepare_props {
     cat > $PROPERTIES << 'EOF'
@@ -54,15 +49,13 @@ EOF
 
 function run_cli {
     echo "#####     RUN IT     #####"
-#    https://issues.jboss.org/browse/EAP7-525 - Requesting CLI Equivalent of Remote Echo / set -x in non-interactive mode (from within scripts)
-    echo "./jboss-cli.sh --file=test.cli --properties=cli.properties -Dhost=master"
-    ./jboss-cli.sh --file=test.cli --properties=cli.properties -Dhost=master
-    # bash jboss-cli.sh --file=$CLI_SCRIPT --properties=$PROPERTIES -Dhost=master
+    COMMAND="./jboss-cli.sh --file=${CLI_SCRIPT} --properties=${PROPERTIES} -Dhost=master"
+    echo $COMMAND
+    eval $COMMAND
 }
 
 clean_env
 prepare_props
 prepare_cli
-resolve_parameter_values
-echo_command
+enable_resolve_parameter_values
 run_cli
