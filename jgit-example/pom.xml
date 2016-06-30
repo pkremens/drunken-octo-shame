@@ -23,7 +23,8 @@
         <dependency>
             <groupId>org.eclipse.jgit</groupId>
             <artifactId>org.eclipse.jgit</artifactId>
-            <version>3.4.1.201406201815-r</version>
+            <version>4.4.0.201606070830-r</version>
+            <!--<version>3.4.1.201406201815-r</version>-->
         </dependency>
         <dependency>
             <groupId>junit</groupId>
@@ -34,10 +35,13 @@
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
-            <version>2.2</version>
+            <version>2.5</version>
         </dependency>
-
-
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>1.7.21</version>
+        </dependency>
     </dependencies>
 
 
