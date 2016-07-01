@@ -1,6 +1,6 @@
-package org.jboss.qe.kremilek.junit.examples.ordered.suite;
+package cz.hradek.kremilek.junit.examples.ordered.suite;
 
-import org.jboss.qe.kremilek.logging.LoggerFactory;
+import cz.hradek.kremilek.logging.LoggerFactory;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

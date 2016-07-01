@@ -1,4 +1,4 @@
-package org.jboss.qe.kremilek.logging;
+package cz.hradek.kremilek.logging;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

@@ -1,7 +1,7 @@
-package org.jboss.qe.kremilek.junit.examples.ordered;
+package cz.hradek.kremilek.junit.examples.ordered;
 
-import org.jboss.qe.kremilek.junit.examples.ordered.suite.ExcludedOneTestCase;
-import org.jboss.qe.kremilek.logging.LoggerFactory;
+import cz.hradek.kremilek.junit.examples.ordered.suite.ExcludedOneTestCase;
+import cz.hradek.kremilek.logging.LoggerFactory;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
