@@ -17,35 +17,47 @@ import java.util.Set;
 /**
  * Class designed to save and restore files in target directory.
  * <p>
- * User of the class can define a directory which should be managed by the {@code Restore} (optionally choose only
+ * User of the class can define a directory which should be managed by the {@link Restore} (optionally choose only
  * subset of files inside the target directory - the rest of the files in the directory will be completely ignored,
- * thus cannot be restored by {@code Restore}). {@code Restore} allows you to show all changes and restore
+ * thus cannot be restored by {@link Restore}). {@link Restore} allows you to show all changes and restore
  * the content of the files to its original state.
+ * <p>
+ * Future plan:
+ * Push &#38; Pop methods:
+ * Push (create a new commit i (where i=0++)) would basically allow user to commit workspace changes in
+ * {@code BeforeClass} method, wipeout to pushed version {@code Before} every test. Pop method would move HEAD one
+ * commit back (where repo init commit is maximum where we can pop to). Pop method would take boolean parameter allowing
+ * directly pop back to init commit (will be used in {@code destroy()} method).
  *
  * @author Petr Kremensky pkremens@redhat.com
  */
 public class Restore {
-    private static final String ALREADY_DESTROYED = "This Restore instance was already destroyed and cannot be reused. " +
-            "A new Restore instance have to be initialized.";
+
     private Git git;
     private final String[] managedFiles;
 
     /**
-     * Create a new {@code Restore} instance. Manage all files inside target <code>directory</code>.
+     * Create a new {@link Restore} instance. Manage all files inside target {@code directory}.
      *
-     * @param directory the {@link File} managed by {@code Restore}
+     * @param directory the {@link File} managed by {@link Restore}
+     * @throws RestoreException in case we fail to initialize the restore object. Restore will try to delete all files
+     *                          created during initialization (.git, .gitignore).
      */
     public Restore(File directory) throws RestoreException {
         this(directory, directory.list());
     }
 
     /**
-     * Create a new {@code Restore} instance. Manage only files listed as <code>include</code> inside
-     * the <code>directory</code>. Ignore all other files in the <code>directory</code>.
+     * Create a new {@link Restore} instance. Manage only files listed as {@code include} inside
+     * the {@code directory}. Ignore all other files in the {@code directory}. If file is ignored, it will not be
+     * restored to it's original state by calling neither {@link #wipeout()}, nor {@link #destroy()}. Deleted ignored
+     * files will be lost as well.
      *
-     * @param directory the {@link File} managed by {@code Restore}
-     * @param include   list of files inside the <code>directory</code> which will be managed by Restore. The rest of
+     * @param directory the {@link File} managed by {@link Restore}
+     * @param include   list of files inside the {@code directory} which will be managed by Restore. The rest of
      *                  the files will be completely ignored (cannot be restored).
+     * @throws RestoreException in case we fail to initialize the restore object. Restore will try to delete all files
+     *                          created during initialization (.git, .gitignore).
      */
     public Restore(final File directory, final String... include) throws RestoreException {
         managedFiles = include;
@@ -83,7 +95,7 @@ public class Restore {
 
             // commit
             String user = System.getProperty("user.name");
-            git.commit().setAuthor(user, user + "@redhat.com").setMessage("Restore").call();
+            git.commit().setAuthor(user, user + "@redhat.com").setMessage("Restore - init").call();
 
             // assert clean status now
             if (!git.status().call().isClean()) {
@@ -99,7 +111,15 @@ public class Restore {
         }
     }
 
-    public Status getStatus() throws RestoreException {
+    /**
+     * Get the {@link Status} object representing the current state of managed files. {@link Status} can be used to
+     * reprieve all changes in managed files.
+     *
+     * @return {@link Status} object representing the current state of managed files
+     * @throws RestoreException          if we fail to get the status of managed directory
+     * @throws RestoreDestroyedException current Restore instance was already destroyed by invoking {@link #destroy()}
+     */
+    public Status getStatus() throws RestoreException, RestoreDestroyedException {
         testDestroyed();
         try {
             return git.status().call();
@@ -108,9 +128,16 @@ public class Restore {
         }
     }
 
-    public List<DiffEntry> getDiff() throws RestoreException {
+    /**
+     * Get the {@code List<DiffEntry>} of all differences among managed files.
+     *
+     * @return list of differences
+     * @throws RestoreException          in case diff retrieval fails
+     * @throws RestoreDestroyedException current Restore instance was already destroyed by invoking {@link #destroy()}
+     */
+    public List<DiffEntry> getDiff() throws RestoreException, RestoreDestroyedException {
+        testDestroyed();
         try {
-            // git.diff().call().forEach(diffEntry -> System.out.println(diffEntry.toString()));
             return git.diff().call();
         } catch (GitAPIException e) {
             throw new RestoreException("Failed to get the diff for managed files.", e);
@@ -120,10 +147,10 @@ public class Restore {
     /**
      * Revert the state of the managed directory into its original state.
      *
-     * @throws RestoreException if we fail to revert the state of the managed directory, or {@code destroy} was already
-     *                          invoked on the current object
+     * @throws RestoreException          if we fail to revert the state of the managed directory
+     * @throws RestoreDestroyedException current Restore instance was already destroyed by invoking {@link #destroy()}
      */
-    public void wipeout() throws RestoreException {
+    public void wipeout() throws RestoreException, RestoreDestroyedException {
         testDestroyed();
         // reset, checkout, and clean
         try {
@@ -141,17 +168,18 @@ public class Restore {
     }
 
     /**
-     * Restore the managed files into original state (call {@code wipeout}) and remove all {@code Restore} (GIT)
-     * files (.git, .gitignore).
+     * Restore the managed files into original state (call {@link #wipeout()} and remove all {@link Restore}
+     * control files (.git, .gitignore).
      * <p>
      * WARNING!!!
-     * This is a one time action, {@code Restore} instance will be crippled by this invocation.
+     * This is a one time action, current {@code Restore} instance will be crippled by this invocation.
      *
-     * @return <code>true</code> in case all that managed files were restored and all operating files were deleted.
-     * @throws RestoreException if we fail to revert the state of the managed directory and destroy all control files,
-     *                          or {@code destroy} was already invoked on the current object
+     * @return {@code true} in case all that managed files were restored and all operating files were deleted.
+     * @throws RestoreException          if we fail to revert the state of the managed directory and destroy all control
+     *                                   files
+     * @throws RestoreDestroyedException current Restore instance was already destroyed by invoking {@link #destroy()}
      */
-    public boolean destroy() throws RestoreException {
+    public boolean destroy() throws RestoreException, RestoreDestroyedException {
         testDestroyed();
         File gitDir = getGitDir();
         try {
@@ -166,9 +194,12 @@ public class Restore {
         return !ignoreDeleted || gitDir.exists();
     }
 
-    private void testDestroyed() throws RestoreException {
+    /**
+     * Throw {@link RestoreDestroyedException} in case that current instance was destroyed by {@link #destroy()}.
+     */
+    private void testDestroyed() throws RestoreDestroyedException {
         if (git == null) {
-            throw new RestoreException(ALREADY_DESTROYED);
+            throw new RestoreDestroyedException();
         }
     }
 
@@ -177,15 +208,15 @@ public class Restore {
     }
 
     /**
-     * Print the information about managed directory in human readable form.
+     * Get the information about managed directory in human readable form.
      *
-     * @return a string representation of the object.
+     * @return a {@link String} representation of the object.
      */
     @Override
     public String toString() {
-        // already destroyed?
         if (git == null) {
-            return ALREADY_DESTROYED;
+            return "This Restore instance was already destroyed and cannot be reused. " +
+                    "A new Restore instance have to be initialized";
         }
 
         StringBuilder sb = new StringBuilder();
