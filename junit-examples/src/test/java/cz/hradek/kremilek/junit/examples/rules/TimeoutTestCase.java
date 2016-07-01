@@ -3,6 +3,8 @@ package cz.hradek.kremilek.junit.examples.rules;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.DisableOnDebug;
+import org.junit.rules.TestRule;
 import org.junit.rules.Timeout;
 
 /**
@@ -17,7 +19,7 @@ import org.junit.rules.Timeout;
  */
 public class TimeoutTestCase {
     @Rule
-    public Timeout methodTimeout = Timeout.seconds(1L);
+    public TestRule methodTimeout = new DisableOnDebug(Timeout.seconds(1L));
 
     @ClassRule
     public static Timeout classTimeout = Timeout.seconds(3L);

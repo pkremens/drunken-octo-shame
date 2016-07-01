@@ -10,10 +10,13 @@ import org.junit.runner.Description;
 import java.util.logging.Logger;
 
 /**
+ * See {@link TestNameTestCase} for much more simple implementation.
+ *
  * @author Petr Kremensky pkremens@redhat.com
  */
 public class LogTestNameTestCase {
     private static final Logger log = LoggerFactory.getLogger(LogTestNameTestCase.class.getSimpleName());
+
 
     @Rule
     public TestRule watcher = new TestWatcher() {
