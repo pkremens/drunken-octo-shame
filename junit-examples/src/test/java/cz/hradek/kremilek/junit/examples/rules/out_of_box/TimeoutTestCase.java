@@ -1,4 +1,4 @@
-package cz.hradek.kremilek.junit.examples.rules;
+package cz.hradek.kremilek.junit.examples.rules.out_of_box;
 
 import org.junit.ClassRule;
 import org.junit.Rule;
