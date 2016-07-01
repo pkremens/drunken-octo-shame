@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.jboss.qe.kremilek</groupId>
+    <artifactId>junit-examples</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.19.1</version>
+                <configuration>
+                    <!--<systemPropertyVariables>-->
+                    <!--<jboss.dist>${jboss.dist}</jboss.dist>-->
+                    <!--<start.timeout>${start.timeout}</start.timeout>-->
+                    <!--</systemPropertyVariables>-->
+                    <redirectTestOutputToFile>true</redirectTestOutputToFile>
+                    <includes>
+                        <!--Include the KremilekTestSuite.java execution-->
+                        <include>org/jboss/qe/kremilek/junit/examples/ordered/suite/KremilekTestSuite.java</include>
+                        <include>org/jboss/qe/kremilek/junit/**/*TestCase.java</include>
+                    </includes>
+                    <excludes>
+                        <!--These will be triggered by KremilekTestSuite-->
+                        <exclude>org/jboss/qe/kremilek/junit/examples/ordered/suite/Excluded*TestCase.java</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
