@@ -29,6 +29,11 @@ public class ExcludedTwoTestCase {
         log.info("Before class");
     }
 
+    @AfterClass
+    public static void afterClass() {
+        log.info("After class");
+    }
+
     @Before
     public void before() {
         log.info("Before");
@@ -37,11 +42,6 @@ public class ExcludedTwoTestCase {
     @After
     public void after() {
         log.info("After");
-    }
-
-    @AfterClass
-    public static void afterClass() {
-        log.info("After class");
     }
 
     @Test

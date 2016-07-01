@@ -31,6 +31,11 @@ public class KremilekTestSuite {
         log.info("beforeClassSuite");
     }
 
+    @AfterClass
+    public static void afterClassSuite() {
+        log.info("afterClassSuite");
+    }
+
     @Before
     public void beforeSuite() {
         log.info("beforeSuite");
@@ -41,11 +46,6 @@ public class KremilekTestSuite {
     public void afterSuite() {
         log.info("afterSuite");
         throw new RuntimeException("This never happens");
-    }
-
-    @AfterClass
-    public static void afterClassSuite() {
-        log.info("afterClassSuite");
     }
 
     @Test

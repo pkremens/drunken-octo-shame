@@ -30,13 +30,21 @@
                     <redirectTestOutputToFile>true</redirectTestOutputToFile>
                     <includes>
                         <!--Include the KremilekTestSuite.java execution-->
-                        <include>org/jboss/qe/kremilek/junit/examples/ordered/suite/KremilekTestSuite.java</include>
-                        <include>org/jboss/qe/kremilek/junit/**/*TestCase.java</include>
+                        <include>**/junit/examples/ordered/suite/KremilekTestSuite.java</include>
+                        <include>**/junit/**/*TestCase.java</include>
                     </includes>
                     <excludes>
                         <!--These will be triggered by KremilekTestSuite-->
-                        <exclude>org/jboss/qe/kremilek/junit/examples/ordered/suite/Excluded*TestCase.java</exclude>
+                        <exclude>**/junit/examples/ordered/suite/Excluded*TestCase.java</exclude>
                     </excludes>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
                 </configuration>
             </plugin>
         </plugins>
