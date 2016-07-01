@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.util.Arrays;
 
 /**
- * http://meri-stuff.blogspot.cz/2014/08/junit-rules.html#UsingRulesExampleRuleTemporaryFolder
+ * http://meri-stuff.blogspot.cz/2014/08/junit-rules.html
  * <p>
  * Example Rule - Temporary Folder
  * Temporary folder rule creates new empty folder, runs test or test case and then deletes the folder. You can either

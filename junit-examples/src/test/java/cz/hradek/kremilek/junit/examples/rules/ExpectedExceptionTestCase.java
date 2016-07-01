@@ -8,7 +8,7 @@ import org.junit.rules.ExpectedException;
 import java.util.logging.Logger;
 
 /**
- * http://meri-stuff.blogspot.cz/2014/08/junit-rules.html#UsingRulesExampleRuleTemporaryFolder
+ * http://meri-stuff.blogspot.cz/2014/08/junit-rules.html
  * <p>
  * Expected exception runs the test and catches any exception it throws. The rule is able to check whether the exception
  * contains the right message, the right cause and whether it was thrown by the right line.
