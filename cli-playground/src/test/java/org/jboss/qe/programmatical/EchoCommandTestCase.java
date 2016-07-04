@@ -4,7 +4,6 @@ import org.jboss.as.cli.CliInitializationException;
 import org.jboss.as.cli.CommandContext;
 import org.jboss.as.cli.CommandContextFactory;
 import org.jboss.as.cli.CommandLineException;
-import org.jboss.as.cli.scriptsupport.CLI;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -16,9 +15,9 @@ import java.io.IOException;
 import java.io.PrintStream;
 
 /**
- * @author Petr Kremensky pkremens@redhat.com on 24/06/2016
+ * @author Petr Kremensky pkremens@redhat.com
  */
-public class ConnectionTestCase {
+public class EchoCommandTestCase {
     private CommandContext ctx;
 
 
@@ -29,7 +28,7 @@ public class ConnectionTestCase {
 
     @BeforeClass
     public static void setProps() {
-        File jbossCliXml = new File("/home/pkremens/workspace/jboss-eap-7.0/bin/jboss-cli.xml");
+        File jbossCliXml = new File("/home/pkremens/workspace/wildfly-core-3.0.0.Alpha3-SNAPSHOT/bin/jboss-cli.xml");
         File logginPorperties = new File("/home/pkremens/workspace/jboss-eap-7.0/bin/jboss-cli-logging.properties");
         System.setProperty("jboss.cli.config", jbossCliXml.getAbsolutePath());
         System.setProperty("logging.configuration", "file:" + logginPorperties.getAbsolutePath());

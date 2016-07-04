@@ -22,6 +22,7 @@ public class Hello {
 
         ctx.connectController();
         ctx.handle("echo hello");
+        ctx.handle(":read-resource");
         ctx.terminateSession();
 
 //        FileInputStream fis = new FileInputStream(outputFile);
