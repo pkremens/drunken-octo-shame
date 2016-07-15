@@ -9,6 +9,8 @@ import org.junit.rules.ExpectedException;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.nio.charset.Charset;
 
 /**
@@ -125,7 +127,7 @@ public class RestoreTestCase {
      * Make sure wipeout() can restore file to its original value.
      */
     @Test
-    public void wipeoutCheckoutTest() throws RestoreException, RestoreDestroyedException, IOException {
+    public void wipeoutModifyTest() throws RestoreException, RestoreDestroyedException, IOException {
         restore = new Restore(workspace.getRoot());
         Assert.assertTrue(restore.getStatus().isClean());
         final String original = FileUtils.readFileToString(workspace.MODIFY_ME, Charset.defaultCharset());
@@ -139,10 +141,52 @@ public class RestoreTestCase {
         Assert.assertEquals(original, FileUtils.readFileToString(workspace.MODIFY_ME, Charset.defaultCharset()));
     }
 
+    /*
+     * Make sure that wipeout() can restore deleted files.
+     */
+    @Test
+    public void wipeoutRemoteTest() throws RestoreException, RestoreDestroyedException {
+        restore = new Restore(workspace.getRoot());
+        Assert.assertTrue(workspace.DELETE_ME.exists());
+
+        Assert.assertTrue(workspace.DELETE_ME.delete());
+        Assert.assertFalse(restore.getStatus().isClean());
+
+        restore.wipeout();
+        Assert.assertTrue(workspace.DELETE_ME.exists());
+        Assert.assertTrue(restore.getStatus().isClean());
+    }
+
+    /*
+     * Make sure that destroy() will call wipeout() on managed directory and remove all control files (.git*).
+     */
     @Test
     @Ignore
     public void destroyTest() {
 
+    }
+
+    /*
+     * RestoreDestroyedException should be thrown by all Restore operating methods once instance was destroyed.
+     */
+    @Test
+    public void destroyException() throws RestoreException, RestoreDestroyedException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        restore = new Restore(workspace.getRoot());
+        restore.destroy();
+        expectException(restore, Restore.class.getDeclaredMethod("getStatus"), RestoreDestroyedException.class);
+        expectException(restore, Restore.class.getDeclaredMethod("getDiff"), RestoreDestroyedException.class);
+        expectException(restore, Restore.class.getDeclaredMethod("wipeout"), RestoreDestroyedException.class);
+        expectException(restore, Restore.class.getDeclaredMethod("destroy"), RestoreDestroyedException.class);
+    }
+
+    private void expectException(Restore restore, Method method, Class<? extends Exception> exceptionClass) throws InvocationTargetException, IllegalAccessException {
+        try {
+            method.invoke(restore);
+        } catch (Exception ex) {
+            Assert.assertEquals(exceptionClass, ex.getCause().getClass());
+            return;
+        }
+        Assert.fail("Exception " + exceptionClass.getSimpleName() + " was not thrown by " + method.getName() + "() invocation.");
     }
 
     @Test
