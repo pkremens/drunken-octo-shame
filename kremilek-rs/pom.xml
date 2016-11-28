@@ -14,9 +14,6 @@
     </modules>
 
     <properties>
-        <!-- Explicitly declaring the source encoding eliminates the following
-            message: [WARNING] Using platform encoding (UTF-8 actually) to copy
-            filtered resources, i.e. build is platform dependent! -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <!-- JBoss dependency versions -->
@@ -24,8 +21,13 @@
         <version.jboss.spec.javaee.7.0>1.1.0.Beta1</version.jboss.spec.javaee.7.0>
         <version.jboss.bom.eap>7.0.0.GA</version.jboss.bom.eap>
 
+        <!-- Client dependencies versions -->
+        <commons-io.version>2.4</commons-io.version>
+        <httpclient.version>4.5</httpclient.version>
+
         <!-- other plug-in versions -->
         <version.war.plugin>2.6</version.war.plugin>
+        <exec-maven-plugin.version>1.5.0</exec-maven-plugin.version>
 
         <!-- maven-compiler-plugin -->
         <maven.compiler.target>1.8</maven.compiler.target>
