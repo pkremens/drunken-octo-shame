@@ -29,27 +29,54 @@ public class RestoreTestCase {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
+    /*
+     * Default constructor test. All files in target directory are managed by restore.
+     */
     @Test
     public void initStageAllTest() throws RestoreException {
         restore = new Restore(workspace.getRoot());
+        // TODO verify the list of managed files
     }
 
+    /*
+     * Manage all files in target directory manually.
+     */
     @Test
     public void initStageAllExplicitlyTest() throws RestoreException {
         String[] filenames = workspace.getRoot().list();
         restore = new Restore(workspace.getRoot(), filenames);
+        // TODO verify the list of managed files
     }
 
+    /*
+     * Non-existing include files are simply ignored.
+     * Two non-existing files - all will be included
+     */
     @Test
     @Ignore
-    public void initNoExceptionOnNonexistingIncludeTest() throws RestoreException {
+    public void initNonexistingIncludeTest() throws RestoreException {
         restore = new Restore(workspace.getRoot(), "foo", "bar");
+        // TODO verify the list of managed files
         // all files should be ignored now
 //        Arrays.stream(workspace.getRoot().list((dir, name) -> !name.startsWith(".git"))).forEach(System.out::println);
 //        Arrays.stream(workspace.getRoot().list(this::gitFileFilter);
     }
 
+    /*
+     * Non-existing include files are simply ignored.
+     * One non-existing, one existing files are passed as included during restore initialization.
+     * Only existing file passed via include will be managed, no exception should be thrown.
+     */
+    @Test
+    @Ignore
+    public void initNonexistingIncludeTest2() throws RestoreException {
+
+    }
+
     // TBD Adam bien jak to bylo s funkcnima interface v lambdach sakra
+    /*
+     * Throw RestoreException when trying to init restore on non existing file.
+     */
     @Test
     @Ignore
     public void exceptionOnNonExistingWorkspaceTest() throws RestoreException {
