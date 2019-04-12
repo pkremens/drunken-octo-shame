@@ -12,7 +12,7 @@ public class SoftAssertionsTestCase {
     public JUnitSoftAssertions softAssertions = new JUnitSoftAssertions();
 
     @Test
-    public void verifiesScoreSoftlyUsingRule() {
+    public void makeAssertionsOnSomeString() {
         String fails = "Sorry, I've got to fail!";
 
         softAssertions.assertThat(fails)
