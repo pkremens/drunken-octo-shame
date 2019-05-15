@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.jboss.qe.kremilek</groupId>
+    <artifactId>jms-playground</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0-SNAPSHOT</version>
+
+    <properties>
+        <artemis-jms.version>2.6.4</artemis-jms.version>
+        <wildfly.version>15.0.0.Final</wildfly.version>
+    </properties>
+
+    <modules>
+        <module>01_using_jms</module>
+        <module>02_wildfly_standalone</module>
+        <module>03_jms_in_deployment</module>
+    </modules>
+
+    <dependencyManagement>
+        <dependencies>
+            <!--Artemis dependencies-->
+            <dependency>
+                <groupId>org.apache.activemq</groupId>
+                <artifactId>artemis-jms-client-all</artifactId>
+                <version>${artemis-jms.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.activemq</groupId>
+                <artifactId>artemis-server</artifactId>
+                <version>${artemis-jms.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.activemq</groupId>
+                <artifactId>artemis-jms-server</artifactId>
+                <version>${artemis-jms.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.activemq</groupId>
+                <artifactId>artemis-jms-client</artifactId>
+                <version>${artemis-jms.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.activemq.examples.broker</groupId>
+                <artifactId>embedded</artifactId>
+                <version>${artemis-jms.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wildfly</groupId>
+                <artifactId>wildfly-client-all</artifactId>
+                <version>${wildfly.version}</version>
+            </dependency>
+            <!-- Wildfly dependencies -->
+            <dependency>
+                <groupId>org.wildfly.bom</groupId>
+                <artifactId>wildfly-javaee8-with-tools</artifactId>
+                <version>${wildfly.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+
+</project>

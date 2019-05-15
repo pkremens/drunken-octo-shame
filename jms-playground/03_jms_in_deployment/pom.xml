@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>jms-playground</artifactId>
+        <groupId>org.jboss.qe.kremilek</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <!--http://localhost:8080/03_jms_in_deployment-1.0-SNAPSHOT-->
+    <artifactId>03_jms_in_deployment</artifactId>
+    <packaging>war</packaging>
+
+    <build>
+        <plugins>
+            <!--Explicit version for war plugin in order to avoid:-->
+            <!--[ERROR] Failed to execute goal org.apache.maven.plugins:maven-war-plugin:2.2:war (default-war)-->
+            <!--on project 03_jms_in_deployment: Error assembling WAR: webxml attribute is required-->
+            <!--(or pre-existing WEB-INF/web.xml if executing in update mode) -> [Help 1]-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.2.2</version>
+            </plugin>
+
+            <plugin>
+                <!--https://docs.jboss.org/wildfly/plugins/maven/latest/examples/deployment-example.html-->
+                <!--mvn wildfly:deploy-->
+                <!--mvn wildfly:redeploy-->
+                <!--mvn wildfly:undeploy-->
+                <groupId>org.wildfly.plugins</groupId>
+                <artifactId>wildfly-maven-plugin</artifactId>
+                <version>2.0.0.Final</version>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.jboss.spec.javax.servlet</groupId>
+            <artifactId>jboss-servlet-api_4.0_spec</artifactId>
+        </dependency>
+    </dependencies>
+</project>
