@@ -11,7 +11,8 @@ import java.util.Map;
  */
 @Singleton
 public class DonutDataProducer {
-    public static final DonutChartModel getDonutChartModel() {
+
+    public final DonutChartModel getDonutChartModel() {
         DonutChartModel model = new DonutChartModel();
 
         Map<String, Number> circle1 = new LinkedHashMap<String, Number>();

@@ -5,6 +5,7 @@ import org.primefaces.model.chart.DonutChartModel;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.inject.Model;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 /**
@@ -12,6 +13,10 @@ import javax.inject.Named;
  */
 @Model
 public class DonutView {
+
+    @Inject
+    DonutDataProducer donutDataProducer;
+
     private DonutChartModel donutModel;
 
     @Named
@@ -21,6 +26,6 @@ public class DonutView {
 
     @PostConstruct
     public void fetchStaticDonutData() {
-        donutModel = DonutDataProducer.getDonutChartModel();
+        donutModel = donutDataProducer.getDonutChartModel();
     }
 }
