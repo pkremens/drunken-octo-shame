@@ -10,6 +10,7 @@ import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * @author Petr Kremensky pkremens@redhat.com
@@ -17,6 +18,9 @@ import java.util.List;
 @RequestScoped
 public class PersonListProducer {
     private List<Person> people;
+
+    @Inject
+    private Logger log;
 
     @Inject
     PeopleDB peopleDB;
@@ -33,6 +37,8 @@ public class PersonListProducer {
     }
 
     public void onPeopleListChange(@Observes(notifyObserver = Reception.IF_EXISTS) final Person person) {
+        log.info("Event caught on " + person.toString());
         updatePeopleList();
+        log.info("Updated list:" + people.toString());
     }
 }

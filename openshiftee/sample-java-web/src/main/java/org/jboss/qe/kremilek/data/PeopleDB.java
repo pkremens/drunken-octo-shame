@@ -20,8 +20,13 @@ public class PeopleDB {
     private List<Person> people = new ArrayList<>();
 
     public void createPerson(Person person) {
-        log.info("Creating a new persion: " + person.toString());
+        log.info("Creating a new person: " + person.toString());
         people.add(person);
+    }
+
+    public void deletePerson(Person person) {
+        log.info("Deleting a person: " + person.toString());
+        people.remove(person);
     }
 
     public List<Person> getPeople() {

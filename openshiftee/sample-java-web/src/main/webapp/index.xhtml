@@ -29,21 +29,30 @@
     <!--<p:chart id="votes" type="pie" model="#{chartView.livePieModel}" style="width:400px;height:300px"/>-->
     <!--</h:form>-->
 
-    <h:panelGroup rendered="#{empty people}">
-        <em>No registered members.</em>
-    </h:panelGroup>
-    <h2>Members</h2>
-    <h:dataTable var="_person" value="#{people}"
-                 rendered="#{not empty people}">
-        <h:column>
-            <f:facet name="header">Id</f:facet>
-            #{_person.id}
-        </h:column>
-        <h:column>
-            <f:facet name="header">Name</f:facet>
-            #{_person.name}
-        </h:column>
-    </h:dataTable>
+    <h:form id="people">
+        <h:panelGroup rendered="#{empty people}">
+            <em>No registered members.</em>
+        </h:panelGroup>
+        <h2>Members</h2>
+        <h:dataTable var="_person" value="#{people}"
+                     rendered="#{not empty people}">
+            <h:column>
+                <f:facet name="header">Id</f:facet>
+                #{_person.id}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Name</f:facet>
+                #{_person.name}
+            </h:column>
+            <h:column>
+                <p:commandButton value="Delete" ajax="false" id="delete"
+                                 action="#{personController.deletePerson(_person)}"
+                                 style="margin-right:20px;">
+                    <f:ajax render="people"/>
+                </p:commandButton>
+            </h:column>
+        </h:dataTable>
+    </h:form>
     <br/>
     <p:chart type="donut" model="#{donutView.donutModel}" style="width:400px;height:300px"/>
     <br/>
