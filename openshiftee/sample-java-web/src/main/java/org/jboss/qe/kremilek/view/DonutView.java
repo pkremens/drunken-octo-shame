@@ -7,6 +7,7 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.inject.Model;
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.logging.Logger;
 
 /**
  * @author Petr Kremensky pkremens@redhat.com
@@ -15,7 +16,10 @@ import javax.inject.Named;
 public class DonutView {
 
     @Inject
-    DonutDataProducer donutDataProducer;
+    private Logger log;
+
+    @Inject
+    private DonutDataProducer donutDataProducer;
 
     private DonutChartModel donutModel;
 
@@ -26,6 +30,7 @@ public class DonutView {
 
     @PostConstruct
     public void fetchStaticDonutData() {
+        log.info("Creating a Donut");
         donutModel = donutDataProducer.getDonutChartModel();
     }
 }
