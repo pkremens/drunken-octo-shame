@@ -18,7 +18,7 @@ public class DonutView {
 
     @Named
     public DonutChartModel getDonutModel() {
-        return donutDataProducer.donutChartModel;
+        return donutDataProducer.getDonutChartModel();
     }
 
 

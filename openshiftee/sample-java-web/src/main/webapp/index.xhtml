@@ -34,8 +34,7 @@
     </h:panelGroup>
     <h2>Members</h2>
     <h:dataTable var="_person" value="#{people}"
-                 rendered="#{not empty people}"
-                 styleClass="simpletablestyle">
+                 rendered="#{not empty people}">
         <h:column>
             <f:facet name="header">Id</f:facet>
             #{_person.id}

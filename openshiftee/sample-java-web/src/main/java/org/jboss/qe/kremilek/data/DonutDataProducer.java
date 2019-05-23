@@ -3,8 +3,8 @@ package org.jboss.qe.kremilek.data;
 import org.primefaces.model.chart.DonutChartModel;
 
 import javax.annotation.PostConstruct;
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import javax.inject.Singleton;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -12,12 +12,16 @@ import java.util.logging.Logger;
 /**
  * @author Petr Kremensky pkremens@redhat.com
  */
-@Singleton
+@ApplicationScoped
 public class DonutDataProducer {
     @Inject
     private Logger log;
 
-    public DonutChartModel donutChartModel;
+    public DonutChartModel getDonutChartModel() {
+        return donutChartModel;
+    }
+
+    private DonutChartModel donutChartModel;
 
     @PostConstruct
     private void fetchStaticDonutData() {

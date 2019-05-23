@@ -3,18 +3,23 @@ package org.jboss.qe.kremilek.data;
 import org.jboss.qe.kremilek.Model.Person;
 
 import javax.annotation.PostConstruct;
+import javax.enterprise.context.RequestScoped;
+import javax.enterprise.event.Observes;
+import javax.enterprise.event.Reception;
 import javax.enterprise.inject.Produces;
+import javax.inject.Inject;
 import javax.inject.Named;
-import javax.inject.Singleton;
-import java.util.Arrays;
 import java.util.List;
 
 /**
  * @author Petr Kremensky pkremens@redhat.com
  */
-@Singleton
+@RequestScoped
 public class PersonListProducer {
     private List<Person> people;
+
+    @Inject
+    PeopleDB peopleDB;
 
     @Named
     @Produces
@@ -23,10 +28,11 @@ public class PersonListProducer {
     }
 
     @PostConstruct
-    public void constructInitialPeople() {
-        people = Arrays.asList(
-                new Person(1L, "pkremens"),
-                new Person(2L, "syzerman")
-        );
+    public void updatePeopleList() {
+        people = peopleDB.getPeople();
+    }
+
+    public void onPeopleListChange(@Observes(notifyObserver = Reception.IF_EXISTS) final Person person) {
+        updatePeopleList();
     }
 }
