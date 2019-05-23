@@ -6,12 +6,28 @@ http://localhost:8080/sample-java-web
 ```
 
 === Run on OCP
-==== Build locally
 ```
-oc new-app --name=sample-java-web openshift/wildfly-160-centos7~https://github.com/pkremens/drunken-octo-shame --context-dir=openshiftee --build-env=ARTIFACT_DIR=sample-java-web/target --build-env=MAVEN_ARGS_APPEND="-pl sample-java-web -am"
-oc expose svc/sample-java-web
-oc logs -f bc/sample-java-web
+oc new-project sample-java-web
+```
+==== binary
+```
+oc new-build --name=sample-java-web-binary openshift/wildfly-160-centos7 --binary=true
+mvn package -P openshift
+oc start-build sample-java-web-binary --from-file=/home/pkremens/devel/drunken-octo-shame/openshiftee/sample-java-web/target/ROOT.war --wait
+oc new-app sample-java-web-binary
+oc expose svc/sample-java-web-binary
 
-oc start-build sample-java-web --follow
+mvn package -P openshift
+oc start-build sample-java-web-binary --from-file=/home/pkremens/devel/drunken-octo-shame/openshiftee/sample-java-web/target/ROOT.war --wait
+```
+
+==== s2i
+```
+oc new-app --name=sample-java-web-s2i openshift/wildfly-160-centos7~https://github.com/pkremens/drunken-octo-shame --context-dir=openshiftee --build-env=ARTIFACT_DIR=sample-java-web/target --build-env=MAVEN_ARGS_APPEND="-pl sample-java-web -am"
+oc expose svc/sample-java-web-s2i
+oc logs -f bc/sample-java-web-s2i
+
+git add . ; git commit -m update ; git push
+oc start-build sample-java-web-s2i --follow
 ```
 
