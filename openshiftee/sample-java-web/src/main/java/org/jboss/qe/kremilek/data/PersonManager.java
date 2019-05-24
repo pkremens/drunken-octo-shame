@@ -36,7 +36,7 @@ public class PersonManager {
         em.remove(personToDelete);
     }
 
-    private Person getPersonById(Long id) {
+    public Person getPersonById(Long id) {
         return em.find(Person.class, id);
     }
 
