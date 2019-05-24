@@ -33,19 +33,7 @@
         width: 200px;
     }
 
-
-
-
-
-
-
-
-
-
-
-
     </style>
-
 
     <h:form>
         <h3 style="margin-top:0">Client</h3>
@@ -80,7 +68,7 @@
                     <h:outputText value="Action"/>
                 </f:facet>
                 <p:commandButton value="Delete" id="delete"
-                                 action="#{personController.deletePerson(_person)}"
+                                 action="#{personController.deletePerson(_person.id)}"
                                  update="@form">
                 </p:commandButton>
             </p:column>

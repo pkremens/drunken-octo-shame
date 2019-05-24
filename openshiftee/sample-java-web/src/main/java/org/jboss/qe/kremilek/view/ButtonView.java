@@ -28,6 +28,7 @@ public class ButtonView {
         log.info("Welcome button pressed");
         FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_INFO, "Welcome", "Welcome to Primefaces!!");
         facesContext.addMessage(null, m);
+        log.warning(personManager.getPersons().toString());
     }
 
     @Named

@@ -1,21 +1,31 @@
-package org.jboss.qe.kremilek.Model;
+package org.jboss.qe.kremilek.model;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
  * @author Petr Kremensky pkremens@redhat.com
  */
-public class Person {
+@Entity
+public class Person implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Size(min = 1, max = 25, message = "Name may not be null")
+    @Pattern(regexp = "[A-Za-z0-9 ]*", message = "Name must contain only letters, numbers and spaces")
     private String name;
 
-    // todo color
     public Person() {
     }
 
-    public Person(Long id, String name) {
-        this.id = id;
+    public Person(String name) {
         this.name = name;
     }
 

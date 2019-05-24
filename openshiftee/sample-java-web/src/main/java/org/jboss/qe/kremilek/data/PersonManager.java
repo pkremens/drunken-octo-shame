@@ -1,43 +1,66 @@
 package org.jboss.qe.kremilek.data;
 
-import org.jboss.qe.kremilek.Model.Person;
+import org.jboss.qe.kremilek.model.Person;
 
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.ApplicationScoped;
+import javax.ejb.Stateless;
 import javax.inject.Inject;
-import java.util.ArrayList;
+import javax.persistence.EntityManager;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.List;
 import java.util.logging.Logger;
 
 /**
  * @author Petr Kremensky pkremens@redhat.com
  */
-@ApplicationScoped
+@Stateless
 public class PersonManager {
     @Inject
     private Logger log;
 
-    private List<Person> personList = new ArrayList<>();
+    @Inject
+    private EntityManager em;
 
-    public void createPerson(Person person) {
+    public Person addPerson(Person person) {
         log.info("Creating a new person: " + person.toString());
-        personList.add(person);
+        em.persist(person);
+        return person;
     }
 
-    public void deletePerson(Person person) {
-        log.info("People: " + personList.toString());
-        log.info("Contains? " + personList.contains(person));
-        log.info("Deleting a person: " + person.toString() + " - " + personList.remove(person));
+    public void deletePerson(Long id) {
+        Person personToDelete = getPersonById(id);
+        log.info("Deleting a person: " + personToDelete.toString());
+        em.remove(personToDelete);
     }
 
-    public List<Person> getPersonList() {
-        return personList;
+    private Person getPersonById(Long id) {
+        return em.find(Person.class, id);
     }
 
     @PostConstruct
     public void initPeople() {
         log.info("Initializing a new personList");
-        createPerson(new Person(1L, "pkremens"));
-        createPerson(new Person(2L, "syzerman"));
+        addPerson(new Person("Petr Kremensky"));
+        addPerson(new Person("Steve Yzerman"));
+        addPerson(new Person("Matt Hardy"));
+        addPerson(new Person("Vincenzo Nibali"));
+        addPerson(new Person("Michael Schumacher"));
+    }
+
+    /**
+     * Get all customers
+     *
+     * @return all customers in DB
+     */
+    public List<Person> getPersons() {
+        log.info("Get all Persons");
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Person> criteria = cb.createQuery(Person.class);
+        Root<Person> person = criteria.from(Person.class);
+        criteria.select(person);
+//        criteria.orderBy(cb.asc(customer.get("name")));
+        return em.createQuery(criteria).getResultList();
     }
 }
