@@ -20,9 +20,23 @@ public class PersonController {
     @Inject
     private PersonManager personManager;
 
-    //    @Named("people")
+    private String name;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public List<Person> getPersons() {
         return personManager.getPersons();
+    }
+
+    public void addPerson() {
+        personManager.addPerson(name);
+        name = null;
     }
 
     public void deletePerson(Long id) {

@@ -23,10 +23,11 @@ public class PersonManager {
     @Inject
     private EntityManager em;
 
-    public Person addPerson(Person person) {
-        log.info("Creating a new person: " + person.toString());
-        em.persist(person);
-        return person;
+    public Person addPerson(String name) {
+        Person personToAdd = new Person(name);
+        log.info("Creating a new person: " + personToAdd.toString());
+        em.persist(personToAdd);
+        return personToAdd;
     }
 
     public void deletePerson(Long id) {
@@ -42,11 +43,11 @@ public class PersonManager {
     @PostConstruct
     public void initPeople() {
         log.info("Initializing a new personList");
-        addPerson(new Person("Petr Kremensky"));
-        addPerson(new Person("Steve Yzerman"));
-        addPerson(new Person("Matt Hardy"));
-        addPerson(new Person("Vincenzo Nibali"));
-        addPerson(new Person("Michael Schumacher"));
+        addPerson("Petr Kremensky");
+        addPerson("Steve Yzerman");
+        addPerson("Matt Hardy");
+        addPerson("Vincenzo Nibali");
+        addPerson("Michael Schumacher");
     }
 
     /**

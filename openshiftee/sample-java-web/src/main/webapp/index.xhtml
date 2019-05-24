@@ -28,33 +28,33 @@
     <!--<p:poll interval="3" update="votes" /> live updates-->
     <!--<p:chart id="votes" type="pie" model="#{chartView.livePieModel}" style="width:400px;height:300px"/>-->
     <!--</h:form>-->
-    <style type="text/css">
-    .ui-analog-clock {
-        width: 200px;
-    }
 
-    </style>
 
-    <h:form>
-        <h3 style="margin-top:0">Client</h3>
-        <p:clock/>
+    <h:form id="personAdd">
+        <p:growl id="messages"/>
+        <p:panelGrid columns="2">
+            <f:facet name="header">
+                Add Person
+            </f:facet>
 
-        <h3>Server</h3>
-        <!--<p:clock pattern="HH:mm:ss.SSS dd.MM.yyyy" mode="server"/>-->
-        <p:clock pattern="HH:mm:ss dd.MM.yyyy" mode="server"/>
+            <h:outputLabel value="Name: " for="name"/>
+            <p:inputText id="name" value="#{personController.name}"/>
 
-        <h3>Analog</h3>
-        <p:clock displayMode="analog"/>
+            <f:facet name="footer">
+                <p:commandButton value="Add" update=":personsList, @form"
+                                 actionListener="#{personController.addPerson()}"
+                                 styleClass="ui-priority-primary"/>
+            </f:facet>
+        </p:panelGrid>
     </h:form>
 
-    <h:form id="people">
-        <!--<h:panelGroup rendered="#{empty people}">-->
-        <!--<em>No registered members.</em>-->
-        <!--</h:panelGroup>-->
+    <h:form id="personsList">
+        <h:panelGroup rendered="#{empty personController.persons}">
+            <em>No registered members.</em>
+        </h:panelGroup>
         <h2>Members</h2>
-        <p:dataTable var="_person" value="#{personController.persons}">
-            <!--<h:dataTable var="_person" value="#{people}"-->
-            <!--rendered="#{not empty people}">-->
+        <p:dataTable var="_person" value="#{personController.persons}"
+                     rendered="#{not empty personController.persons}">
             <p:column>
                 <f:facet name="header">Id</f:facet>
                 #{_person.id}
@@ -80,11 +80,36 @@
         <p:commandButton value="Welcome" id="welcome" update="growl" action="#{buttonView.welcomeAction}"
                          style="margin-right:20px;"/>
 
-        <p:commandButton value="Reset" id="reset" update="growl people" action="#{buttonView.resetAction}"
+        <p:commandButton value="Reset" id="reset" update="growl personsList" action="#{buttonView.resetAction}"
                          style="margin-right:20px;"/>
     </h:form>
     <br/>
-    <p:chart type="donut" model="#{donutView.donutModel}" style="width:400px;height:300px"/>
+    <style type="text/css">
+    .ui-analog-clock {
+        width: 200px;
+    }
+
+
+
+
+
+
+
+
+
+
+    </style>
+    <h:form>
+        <h3 style="margin-top:0">Client</h3>
+        <p:clock/>
+
+        <h3>Server</h3>
+        <!--<p:clock pattern="HH:mm:ss.SSS dd.MM.yyyy" mode="server"/>-->
+        <p:clock pattern="HH:mm:ss dd.MM.yyyy" mode="server"/>
+
+        <h3>Analog</h3>
+        <p:clock displayMode="analog"/>
+    </h:form>
     <br/>
 </h:body>
 </html>
