@@ -1,14 +1,12 @@
 package org.jboss.qe.kremilek.controller;
 
 import org.jboss.qe.kremilek.Model.Person;
-import org.jboss.qe.kremilek.data.PeopleDB;
+import org.jboss.qe.kremilek.data.PersonManager;
 
-import javax.annotation.PostConstruct;
-import javax.enterprise.event.Event;
 import javax.enterprise.inject.Model;
-import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.List;
 import java.util.logging.Logger;
 
 /**
@@ -21,27 +19,21 @@ public class PersonController {
     private Logger log;
 
     @Inject
-    private PeopleDB peopleDB;
+    private PersonManager personManager;
 
-    @Inject
-    private Event<Person> memberEventSrc;
+//    private List<Person> persons;
 
-//    @Produces
-//    @Named
-//    private Person newPerson;
-//
-//    @PostConstruct
-//    public void initNewMember() {
-//        newPerson = new Person();
-//    }
-
-    @Named
-    public void deletePerson(Person person) {
-        peopleDB.deletePerson(person);
-        memberEventSrc.fire(person);
+//    @Named("people")
+    public List<Person> getPersons() {
+        log.info("People from person manager: " + personManager.getPersonList().toString());
+        return personManager.getPersonList();
     }
 
-//    public void register() {
-//        people.
-//    }
+    public void deletePerson(Person person) {
+        personManager.deletePerson(person);
+    }
+
+    public void resetPersons() {
+        personManager.initPeople();
+    }
 }

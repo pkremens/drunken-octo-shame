@@ -32,6 +32,18 @@
     .ui-analog-clock {
         width: 200px;
     }
+
+
+
+
+
+
+
+
+
+
+
+
     </style>
 
 
@@ -48,38 +60,44 @@
     </h:form>
 
     <h:form id="people">
-        <h:panelGroup rendered="#{empty people}">
-            <em>No registered members.</em>
-        </h:panelGroup>
+        <!--<h:panelGroup rendered="#{empty people}">-->
+        <!--<em>No registered members.</em>-->
+        <!--</h:panelGroup>-->
         <h2>Members</h2>
-        <h:dataTable var="_person" value="#{people}"
-                     rendered="#{not empty people}">
-            <h:column>
+        <p:dataTable var="_person" value="#{personController.persons}">
+            <!--<h:dataTable var="_person" value="#{people}"-->
+            <!--rendered="#{not empty people}">-->
+            <p:column>
                 <f:facet name="header">Id</f:facet>
                 #{_person.id}
-            </h:column>
-            <h:column>
+            </p:column>
+            <p:column>
                 <f:facet name="header">Name</f:facet>
                 #{_person.name}
-            </h:column>
-            <h:column>
-                <p:commandButton value="Delete" ajax="false" id="delete"
+            </p:column>
+            <p:column>
+                <f:facet name="header">
+                    <h:outputText value="Action"/>
+                </f:facet>
+                <p:commandButton value="Delete" id="delete"
                                  action="#{personController.deletePerson(_person)}"
-                                 style="margin-right:20px;">
-                    <f:ajax render=":people"/>
+                                 update="@form">
                 </p:commandButton>
-            </h:column>
-        </h:dataTable>
+            </p:column>
+        </p:dataTable>
+    </h:form>
+    <h:form id="control">
+        <p:growl id="growl" life="2000"/>
+
+        <p:commandButton value="Welcome" id="welcome" update="growl" action="#{buttonView.welcomeAction}"
+                         style="margin-right:20px;"/>
+
+        <p:commandButton value="Reset" id="reset" update="growl people" action="#{buttonView.resetAction}"
+                         style="margin-right:20px;"/>
     </h:form>
     <br/>
     <p:chart type="donut" model="#{donutView.donutModel}" style="width:400px;height:300px"/>
     <br/>
-    <h:form>
-        <p:growl id="growl" life="2000"/>
-
-        <p:commandButton value="Welcome" id="welcome" ajax="true" update="growl" action="#{buttonView.buttonAction}"
-                         style="margin-right:20px;" styleClass="ui-priority-primary"/>
-    </h:form>
 </h:body>
 </html>
 
