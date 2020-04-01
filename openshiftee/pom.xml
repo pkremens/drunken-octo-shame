@@ -18,22 +18,30 @@
         <version.primefaces>6.2</version.primefaces>
         <version.wildfly.javaee8.with.tools>16.0.0.Final</version.wildfly.javaee8.with.tools>
         <version.wildfly.maven.plugin>2.0.0.Final</version.wildfly.maven.plugin>
+        <version.openshift.client>4.3.0</version.openshift.client>
     </properties>
 
     <modules>
         <module>sample-java-web</module>
+        <module>client</module>
     </modules>
 
 
     <dependencyManagement>
-        <!-- https://mvnrepository.com/artifact/org.wildfly.bom/wildfly-javaee8-with-tools -->
         <dependencies>
+            <dependency>
+                <groupId>io.fabric8</groupId>
+                <artifactId>openshift-client</artifactId>
+                <version>${version.openshift.client}</version>
+            </dependency>
+
             <dependency>
                 <groupId>org.primefaces</groupId>
                 <artifactId>primefaces</artifactId>
                 <version>${version.primefaces}</version>
             </dependency>
 
+            <!-- https://mvnrepository.com/artifact/org.wildfly.bom/wildfly-javaee8-with-tools -->
             <dependency>
                 <groupId>org.wildfly.bom</groupId>
                 <artifactId>wildfly-javaee8-with-tools</artifactId>
