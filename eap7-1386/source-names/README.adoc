@@ -1,0 +1,42 @@
+https://www.geeksforgeeks.org/difference-between-servletconfig-and-servletcontext-in-java-servlet/
+
+mvn clean package wildfly:deploy
+
+$ curl http://localhost:8080/source-names/servlet1
+<center><h1>NewWebsite.tg</h1></center><br><p>Contact us:forRecruiter@xyz.com
+$ curl http://localhost:8080/source-names/servlet2
+<center><h1>NewWebsite.tg</h1></center><br><p>Contact us:forApplicant@xyz.com
+
+See the server log for MP config sources.
+
+```
+-------------------------------------
+Servlet context name: test
+Servlet virtual server name: default-host
+Servlet name from servlet config: recruiter
+Servlet name: recruiter
+Servlet info:
+=================================
+SysPropConfigSource
+400
+Property names: [Standalone], awt.toolkit, ...
+=================================
+EnvConfigSource
+300
+Property names: PATH, INVOCATION_ID, ...
+=================================
+null:null:ServletConfigSource
+60
+Property names:
+=================================
+null:null:FilterConfigSource
+50
+Property names:
+=================================
+null:ServletContextConfigSource
+40
+Property names:
+-------------------------------------
+```
+
+
