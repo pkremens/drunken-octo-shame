@@ -5,10 +5,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>cz.kremilek.jdk</groupId>
-    <url>https://www.journaldev.com/20395/java-10-features</url>
-    <artifactId>jdk10</artifactId>
+    <artifactId>jdk11</artifactId>
     <version>1.0-SNAPSHOT</version>
-
+    <url>https://www.journaldev.com/24601/java-11-features</url>
 
     <properties>
         <maven.compiler.source>1.10</maven.compiler.source>
