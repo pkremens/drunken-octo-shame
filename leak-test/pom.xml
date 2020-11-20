@@ -9,7 +9,7 @@
     <version>1.0-SNAPSHOT</version>
 
     <properties>
-        <version.junit.junit>4.12</version.junit.junit>
+        <version.junit.junit>4.13.1</version.junit.junit>
         <version.maven.enforcer.plugin>1.4</version.maven.enforcer.plugin>
         <version.maven.surefire.plugin>2.18.1</version.maven.surefire.plugin>
         <version.org.wildfly.core>2.0.0.Alpha5</version.org.wildfly.core>
