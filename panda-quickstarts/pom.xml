@@ -24,7 +24,7 @@
         <!-- project dependency version properties -->
         <panda.version>0.0.7-SNAPSHOT</panda.version>
         <!--<panda.version>0.0.6</panda.version>-->
-        <junit.version>4.12</junit.version>
+        <junit.version>4.13.1</junit.version>
     </properties>
 
     <!-- plugins -->
